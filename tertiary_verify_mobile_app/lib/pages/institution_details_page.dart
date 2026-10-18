@@ -740,12 +740,12 @@ class _InstitutionDetailsPageState extends State<InstitutionDetailsPage> {
                                                               fontWeight:
                                                                   FontWeight
                                                                       .bold)),
-                                                      Text(
+                                                      Flexible(child: Text(
                                                           _filteredList[index]
                                                               .name.trim(),
-                                                          style:  TextStyle(
+                                                          style: TextStyle(
                                                               color: Colors.grey[850],
-                                                              fontSize: 14)),
+                                                              fontSize: 14))),
                                                     ],
                                                   ),
                                                   const SizedBox(height: 8),
@@ -760,12 +760,12 @@ class _InstitutionDetailsPageState extends State<InstitutionDetailsPage> {
                                                               fontWeight:
                                                                   FontWeight
                                                                       .bold)),
-                                                      Text(
+                                                      Flexible(child: Text(
                                                           _filteredList[index]
                                                               .type.trim(),
-                                                          style:  TextStyle(
+                                                          style: TextStyle(
                                                               color: Colors.grey[850],
-                                                              fontSize: 14)),
+                                                              fontSize: 14))),
                                                     ],
                                                   ),
                                                   const SizedBox(height: 8),
@@ -780,12 +780,12 @@ class _InstitutionDetailsPageState extends State<InstitutionDetailsPage> {
                                                               fontWeight:
                                                                   FontWeight
                                                                       .bold)),
-                                                      Text(
+                                                      Flexible(child: Text(
                                                           _filteredList[index]
                                                               .level.trim(),
                                                           style: TextStyle(
                                                               color: Colors.grey[850],
-                                                              fontSize: 14)),
+                                                              fontSize: 14))),
                                                     ],
                                                   ),
                                                 ],

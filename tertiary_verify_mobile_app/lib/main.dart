@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:tertiary_verify/pages/institution_details_page.dart';
 import 'package:tertiary_verify/pages/report_course_page.dart';
@@ -13,7 +15,20 @@ import 'service/session_provider.dart';
 
 // Import your SessionProvider class here
 
+// Debug-only: trust the temporary self-signed certificate of our own server.
+class _DevHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (cert, host, port) =>
+          host == 'tertiaryverify.dedicated.co.za';
+  }
+}
+
 void main() {
+  if (kDebugMode) {
+    HttpOverrides.global = _DevHttpOverrides();
+  }
   runApp(
     ChangeNotifierProvider(
       create: (context) => SessionProvider(),
