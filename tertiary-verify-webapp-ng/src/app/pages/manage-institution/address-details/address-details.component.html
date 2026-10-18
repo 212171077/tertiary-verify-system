@@ -1,0 +1,276 @@
+<p-toast key="tst" [baseZIndex]="99999"></p-toast>
+
+
+<p-panel header="" [toggleable]="false">
+    <ng-template pTemplate="header">
+        <div class="flex align-items-center text-primary">
+            <span class="pi pi-map-marker mr-2"></span>
+            <span class="font-bold text-lg">Enter address</span>
+        </div>
+    </ng-template>
+
+    <div class="p-fluid">
+        <div class="p-formgrid grid">
+            <div class="field col">
+                <label for="addLine1">Address Line 1</label>
+                <input type="text" id="addLine1" aria-describedby="addLine1" pInputText
+                    [(ngModel)]="residentialAddress.addressLine1" [formControl]="ressAddressLine1Control">
+
+                <div *ngIf="ressAddressLine1Control.invalid && ressAddressLine1Control.touched" class="text-danger">
+                    <small *ngIf="ressAddressLine1Control.errors?.required" class="error-message">
+                        Please enter address line 1, e.g street name and number, building name, or
+                        complex name
+                    </small>
+                </div>
+
+                <small *ngIf="!ressAddressLine1Control.dirty || ressAddressLine1Control.valid" id="addLine1">For
+                    example street name and number, building name, or complex
+                    name</small>
+            </div>
+            <div class="field col">
+                <label for="addLine2">Address Line 2</label>
+                <input type="text" id="addLine2" aria-describedby="addLine2" pInputText
+                    [(ngModel)]="residentialAddress.addressLine2" [formControl]="ressAddressLine2Control">
+
+                <div *ngIf="ressAddressLine2Control.invalid && ressAddressLine2Control.touched" class="text-danger">
+                    <small *ngIf="ressAddressLine2Control.errors?.required" class="error-message">
+                        Please enter address line 2, e.g suburb or neighborhood
+                    </small>
+                </div>
+
+                <small *ngIf="!ressAddressLine2Control.dirty || ressAddressLine2Control.valid" id="addLine2">Additional
+                    details about the address such as suburb or
+                    neighborhood</small>
+            </div>
+        </div>
+        <div class="p-formgrid grid">
+            <div class="field col">
+                <label for="addLine3">Address Line 3 (Optional)</label>
+                <input type="text" id="addLine3" aria-describedby="addLine3" pInputText
+                    [(ngModel)]="residentialAddress.addressLine3">
+
+                <small id="addLine3">For example
+                    township, city, or provincial information</small>
+            </div>
+            <div class="field col">
+                <label for="addLine4">Address Line 4 (Optional)</label>
+                <input type="text" id="addLine4" aria-describedby="addLine4" pInputText
+                    [(ngModel)]="residentialAddress.addressLine4">
+                <small id="addLine4">Additional information, such as a specific area or section
+                    within a city or town</small>
+            </div>
+        </div>
+
+        <div class="p-formgrid grid">
+
+            <div class="field col">
+                <label for="province">Province</label>
+                <p-dropdown id="province" [options]="provinceList"
+                    placeholder="Select a province" optionLabel="description" [filter]="true" filterBy="description"
+                    [showClear]="true" optionValue="description" [(ngModel)]="residentialAddress.province"
+                    [formControl]="ressAddressProvinceControl"></p-dropdown>
+
+                <div *ngIf="ressAddressProvinceControl.invalid && ressAddressProvinceControl.touched"
+                    class="text-danger">
+                    <small *ngIf="ressAddressProvinceControl.errors?.required" class="error-message">
+                        Please select province.
+                    </small>
+                </div>
+            </div>
+
+            <div class="field col">
+                <label for="city">City</label>
+                <p-dropdown id="city" [options]="cityList" placeholder="Select a city"
+                    optionLabel="description" [filter]="true" filterBy="description" [showClear]="true"
+                    [(ngModel)]="residentialAddress.city" optionValue="description"
+                    [formControl]="ressAddressCityControl"></p-dropdown>
+
+                <div *ngIf="ressAddressCityControl.invalid && ressAddressCityControl.touched" class="text-danger">
+                    <small *ngIf="ressAddressCityControl.errors?.required" class="error-message">
+                        Please select city.
+                    </small>
+                </div>
+            </div>
+
+         
+        </div>
+
+        <div class="p-formgrid grid">
+            <div class="field col">
+                <label for="postalCode">Postal Code</label>
+                <input type="text" id="postalCode" aria-describedby="postalCode" pInputText
+                    [(ngModel)]="residentialAddress.code" [formControl]="ressAddressPostalCodeControl">
+
+                <div *ngIf="ressAddressPostalCodeControl.invalid && ressAddressPostalCodeControl.touched"
+                    class="text-danger">
+                    <small *ngIf="ressAddressPostalCodeControl.errors?.required" class="error-message">
+                        Please enter postal code
+                    </small>
+
+                    <small *ngIf="ressAddressPostalCodeControl.errors?.pattern" class="error-message">
+                        Please enter a valid South African postal code(4 digits).
+                    </small>
+                </div>
+
+                <small *ngIf="!ressAddressPostalCodeControl.dirty || ressAddressPostalCodeControl.valid"
+                    id="postalCode">4-digit code that is used to identify specific areas and
+                    facilitate the sorting and delivery of mail</small>
+            </div>
+
+            <div class="field col">
+                <label for="examCenterNum">Examination center number</label>
+                <input type="text" id="examCenterNum" aria-describedby="examCenterNum" pInputText
+                    [(ngModel)]="residentialAddress.examinationNumber">
+                <small id="postalCode">Unique identifier assigned to an examination center where students take their
+                    exams.</small>
+            </div>
+
+        </div>
+    </div>
+
+
+    <ng-template pTemplate="footer">
+        <span class="button-container">
+            <p-toast></p-toast>
+            <button [disabled]="ressAddressLine1Control.invalid || ressAddressLine2Control.invalid || ressAddressCityControl.invalid ||  
+            ressAddressProvinceControl.invalid ||  ressAddressPostalCodeControl.invalid"
+            style="margin-left: 15px;margin-top: 10px;" pButton pRipple label="Save" icon="pi pi-save"
+            [loading]="updateLoading" (click)="saveAddress()" class="p-button-success mr-2 mb-2"></button>
+
+            <button style="margin-left: 15px;margin-top: 10px;" pButton pRipple label="Next Page" icon="pi pi-forward"
+                (click)="nextPage()" class="p-button-info mr-2 mb-2"></button>
+
+            <p-confirmPopup key="confirm2"></p-confirmPopup>
+            <button style="margin-left: 15px;margin-top: 10px;" pButton pRipple label="Discard" icon="pi pi-times"
+                (click)="discardData($event, 'Residential')" class="p-button-primary mr-2 mb-2"></button>
+        </span>
+    </ng-template>
+</p-panel>
+
+
+<br />
+<p-panel header="" [toggleable]="false">
+    <ng-template pTemplate="header">
+        <div class="flex align-items-center text-primary">
+            <span class="pi pi-list mr-2"></span>
+            <span class="font-bold text-lg">List of Residential Addresses</span>
+        </div>
+    </ng-template>
+
+    <p-table #dt1 [value]="addressList" dataKey="id" [rows]="5" [loading]="loading" [rowHover]="true"
+        styleClass="p-datatable-gridlines" [paginator]="true" [globalFilterFields]="['addressLine1','addressLine2']"
+        responsiveLayout="scroll">
+        <ng-template pTemplate="caption">
+            <div class="flex justify-content-between flex-column sm:flex-row">
+                <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
+                    (click)="clear(dt1)"></button>
+                <span class="p-input-icon-left mb-2">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" #filter (input)="dt1.filterGlobal($event.target.value, 'contains')"
+                        placeholder="Search Keyword" class="w-full" />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="addressLine1">Address Line 1 <p-sortIcon field="addressLine1">
+                    </p-sortIcon>
+                    <p-columnFilter type="text" field="addressLine1" display="menu"
+                        placeholder="Search by address line 1"></p-columnFilter>
+                </th>
+                <th pSortableColumn="addressLine2">Address Line 2 <p-sortIcon field="addressLine2">
+                    </p-sortIcon>
+                    <p-columnFilter type="text" field="addressLine2" display="menu"
+                        placeholder="Search by address line 2"></p-columnFilter>
+                </th>
+                <th>
+                    <div class="flex justify-content-between align-items-center">
+                        Address Line 3
+                    </div>
+                </th>
+
+                <th>
+                    <div class="flex justify-content-between align-items-center">
+                        Address Line 4
+                    </div>
+                </th>
+
+                <th>
+                    <div class="flex justify-content-between align-items-center">
+                        Postal Code
+                    </div>
+                </th>
+
+                <th>
+                    <div class="flex justify-content-between align-items-center">
+                        Examination Number
+                    </div>
+                </th>
+
+                <th>
+                    <div class="flex justify-content-between align-items-center">
+                        Province
+                    </div>
+                </th>
+                <th>
+                    <div class="flex justify-content-between align-items-center">
+                        City
+                    </div>
+                </th>
+                <th style="width: 8rem">
+                    <div class="flex justify-content-between align-items-center">
+
+                    </div>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-data>
+            <tr>
+                <td style="min-width: 12rem;">
+                    {{data.addressLine1}}
+                </td>
+                <td style="min-width: 12rem;">
+                    {{data.addressLine2}}
+                </td>
+                <td style="min-width: 12rem;">
+                    {{data.addressLine3}}
+                </td>
+                <td style="min-width: 12rem;">
+                    {{data.addressLine4}}
+                </td>
+                <td style="min-width: 12rem;">
+                    {{data.code}}
+                </td>
+                <td style="min-width: 12rem;">
+                    {{data.examinationNumber}}
+                </td>
+                <td style="min-width: 12rem;">
+                    {{data.province}}
+                </td>
+                <td style="min-width: 12rem;">
+                    {{data.city}}
+                </td>
+
+                <td class="text-center" style="min-width: 10rem;">
+                    <p-toast></p-toast>
+                    <button type="button" pButton pRipple icon="pi pi-database" (click)="updateAddressData(data)"
+                        style="margin-inline-end: 0.30rem;" class="p-button-success mr-2 mb-2"></button>
+                    <p-confirmPopup key="confirm2"></p-confirmPopup>
+
+                    <button type="button" pButton pRipple icon="pi pi-trash" (click)="deleteAddress($event, data)"
+                        style="margin-inline-start: 0.30rem;" class="p-button-danger mr-2 mb-2"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="7">No data found.</td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="loadingbody">
+            <tr>
+                <td colspan="7">Loading data. Please wait.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</p-panel>

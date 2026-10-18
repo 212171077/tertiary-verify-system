@@ -1,0 +1,384 @@
+<p-toast key="tst" [baseZIndex]="99999"></p-toast>
+<p-panel header="" [toggleable]="false">
+    <ng-template pTemplate="header">
+        <div class="flex align-items-center text-primary">
+            <span class="pi pi-check-square mr-2"></span>
+            <span class="font-bold text-lg">Confirm Institution Details</span>
+        </div>
+    </ng-template>
+
+    <div class="grid">
+        <div class="col-12">
+            <div class="card">
+                <h5>Institution Details</h5>
+                <div class="grid col-12">
+                    <div class="surface-section col-5" style="margin-top: 0px;">
+                        <ul class="list-none p-0 m-0">
+                            <li class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
+                                <div class="text-500 w-6 md:w-2 font-medium">Name of Institution</div>
+                                <div style="margin-left: 20px;"
+                                    class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
+                                    {{institutionDetails?.institutionName}}
+                                </div>
+                            </li>
+
+                            <li
+                                class="flex align-items-center py-3 px-2 border-top-1 border-bottom-1 surface-border flex-wrap">
+                                <div class="text-500 w-6 md:w-2 font-medium">Contact Number</div>
+                                <div style="margin-left: 20px;"
+                                    class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
+                                    {{institutionDetails?.contactNumber}}
+                                </div>
+                            </li>
+
+                            <li
+                                class="flex align-items-center py-3 px-2 border-top-1 border-bottom-1 surface-border flex-wrap">
+                                <div class="text-500 w-6 md:w-2 font-medium">Alternative Contact Number</div>
+                                <div style="margin-left: 20px;"
+                                    class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
+                                    {{institutionDetails?.alternativeContactNumber}}
+                                </div>
+                            </li>
+
+                            <li
+                                class="flex align-items-center py-3 px-2 border-top-1 border-bottom-1 surface-border flex-wrap">
+                                <div class="text-500 w-6 md:w-2 font-medium">Email Address</div>
+                                <div style="margin-left: 20px;"
+                                    class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
+                                    {{institutionDetails?.email}}
+                                </div>
+                            </li>
+
+                            <li
+                                class="flex align-items-center py-3 px-2 border-top-1 border-bottom-1 surface-border flex-wrap">
+                                <div class="text-500 w-6 md:w-2 font-medium">Registration Date</div>
+                                <div style="margin-left: 20px;"
+                                    class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
+                                    {{institutionDetails?.createDate}}
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                    <div class="col-2">
+                        <p-divider layout="vertical">
+                            <div style="text-align: center;margin-bottom: 5px;">
+                                <strong>STATUS</strong><br />
+                            </div>
+                            <span
+                                [class]="'inst-status-badge status-' + institutionDetails?.status.toLowerCase()">{{institutionDetails?.status}}</span>
+                        </p-divider>
+                    </div>
+
+                    <div class="surface-section col-5" style="margin-top: 0px;">
+                        <ul class="list-none p-0 m-0">
+
+                            <li class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
+                                <div class="text-500 w-6 md:w-2 font-medium">Institution Type</div>
+                                <div style="margin-left: 20px;"
+                                    class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
+                                    {{findInstitutionType(institutionDetails?.institutionTypeList)}}
+                                </div>
+                            </li>
+
+                            <li class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
+                                <div class="text-500 w-6 md:w-2 font-medium">Accreditation Number</div>
+                                <div style="margin-left: 20px;"
+                                    class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
+                                    {{institutionDetails?.accreditationNumber}}
+                                </div>
+                            </li>
+
+                            <li
+                                class="flex align-items-center py-3 px-2 border-top-1 border-bottom-1 surface-border flex-wrap">
+                                <div class="text-500 w-6 md:w-2 font-medium">Accreditation Start Date</div>
+                                <div style="margin-left: 20px;"
+                                    class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
+                                    {{institutionDetails?.accreditationStartDate}}
+                                </div>
+                            </li>
+
+                            <li
+                                class="flex align-items-center py-3 px-2 border-top-1 border-bottom-1 surface-border flex-wrap">
+                                <div class="text-500 w-6 md:w-2 font-medium">Accreditation End Date</div>
+                                <div style="margin-left: 20px;"
+                                    class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
+                                    {{institutionDetails?.accreditationEndDate}}
+                                </div>
+                            </li>
+
+
+
+                        </ul>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid">
+        <div class="col-12">
+            <div class="card">
+                <h5>Address Details</h5>
+                <p-table #dt1 [value]="addressList" dataKey="id" [rows]="5" [loading]="loading" [rowHover]="true"
+                    styleClass="p-datatable-gridlines" [paginator]="true" responsiveLayout="scroll">
+
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="addressLine1">Address Line 1 <p-sortIcon field="addressLine1">
+                                </p-sortIcon>
+                                <p-columnFilter type="text" field="addressLine1" display="menu"
+                                    placeholder="Search by address line 1"></p-columnFilter>
+                            </th>
+                            <th pSortableColumn="addressLine2">Address Line 2 <p-sortIcon field="addressLine2">
+                                </p-sortIcon>
+                                <p-columnFilter type="text" field="addressLine2" display="menu"
+                                    placeholder="Search by address line 2"></p-columnFilter>
+                            </th>
+                            <th>
+                                <div class="flex justify-content-between align-items-center">
+                                    Address Line 3
+                                </div>
+                            </th>
+
+                            <th>
+                                <div class="flex justify-content-between align-items-center">
+                                    Address Line 4
+                                </div>
+                            </th>
+
+                            <th>
+                                <div class="flex justify-content-between align-items-center">
+                                    Postal Code
+                                </div>
+                            </th>
+
+                            <th>
+                                <div class="flex justify-content-between align-items-center">
+                                    Examination Number
+                                </div>
+                            </th>
+
+                            <th>
+                                <div class="flex justify-content-between align-items-center">
+                                    Province
+                                </div>
+                            </th>
+                            <th>
+                                <div class="flex justify-content-between align-items-center">
+                                    City
+                                </div>
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-data>
+                        <tr>
+                            <td style="min-width: 12rem;">
+                                {{data.addressLine1}}
+                            </td>
+                            <td style="min-width: 12rem;">
+                                {{data.addressLine2}}
+                            </td>
+                            <td style="min-width: 12rem;">
+                                {{data.addressLine3}}
+                            </td>
+                            <td style="min-width: 12rem;">
+                                {{data.addressLine4}}
+                            </td>
+                            <td style="min-width: 12rem;">
+                                {{data.code}}
+                            </td>
+                            <td style="min-width: 12rem;">
+                                {{data.examinationNumber}}
+                            </td>
+                            <td style="min-width: 12rem;">
+                                {{data.province}}
+                            </td>
+                            <td style="min-width: 12rem;">
+                                {{data.city}}
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                        <tr>
+                            <td colspan="7">No data found.</td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="loadingbody">
+                        <tr>
+                            <td colspan="7">Loading data. Please wait.</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid">
+        <div class="col-12">
+            <div class="card">
+                <h5>Course Details</h5>
+
+                <p-table #dt1 [value]="institutionCourseList" dataKey="id" [rows]="5" [loading]="loadingInstCourses"
+                    [rowHover]="true" styleClass="p-datatable-gridlines" [paginator]="true" responsiveLayout="scroll">
+
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="courseName">Course name<p-sortIcon field="courseName">
+                                </p-sortIcon>
+                                <p-columnFilter type="text" field="courseName" display="menu"
+                                    placeholder="Search by course name "></p-columnFilter>
+                            </th>
+                            <th pSortableColumn="courseType">Course type<p-sortIcon field="courseType">
+                                </p-sortIcon>
+                                <p-columnFilter type="text" field="courseType" display="menu"
+                                    placeholder="Search by course type"></p-columnFilter>
+                            </th>
+                            <th>
+                                <div class="flex justify-content-between align-items-center">
+                                    Course level
+                                </div>
+                            </th>
+
+                            <th style="width: 3rem">
+                                <div class="flex justify-content-between align-items-center">
+
+                                </div>
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-data>
+                        <tr>
+                            <td style="min-width: 12rem;">
+                                {{data.description}}
+                            </td>
+                            <td style="min-width: 12rem;">
+                                {{data.courseType}}
+                            </td>
+                            <td style="min-width: 12rem;">
+                                {{data.courseLevel}}
+                            </td>
+
+                            <td class="text-center" style="min-width: 10rem;">
+                                <p-toast></p-toast>
+                                <button type="button" pButton pRipple icon="pi pi-map-marker"
+                                    (click)="op2.toggle($event)" style="margin-inline-end: 0.30rem;"
+                                    class="p-button-info mr-2 mb-2"></button>
+
+                                <p-overlayPanel #op2 [showCloseIcon]="true" [style]="{width: '1200px'}">
+                                    <ng-template pTemplate>
+                                        <p-table [value]="data.addressList" [paginator]="true" [rows]="5"
+                                            responsiveLayout="scroll">
+                                            <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="addressLine1">Address Line 1 <p-sortIcon field="addressLine1">
+                                </p-sortIcon>
+                                <p-columnFilter type="text" field="addressLine1" display="menu"
+                                    placeholder="Search by address line 1"></p-columnFilter>
+                            </th>
+                            <th pSortableColumn="addressLine2">Address Line 2 <p-sortIcon field="addressLine2">
+                                </p-sortIcon>
+                                <p-columnFilter type="text" field="addressLine2" display="menu"
+                                    placeholder="Search by address line 2"></p-columnFilter>
+                            </th>
+                            <th>
+                                <div class="flex justify-content-between align-items-center">
+                                    Address Line 3
+                                </div>
+                            </th>
+
+                            <th>
+                                <div class="flex justify-content-between align-items-center">
+                                    Address Line 4
+                                </div>
+                            </th>
+
+                            <th>
+                                <div class="flex justify-content-between align-items-center">
+                                    Postal Code
+                                </div>
+                            </th>
+
+                            <th>
+                                <div class="flex justify-content-between align-items-center">
+                                    Examination Number
+                                </div>
+                            </th>
+
+                            <th>
+                                <div class="flex justify-content-between align-items-center">
+                                    Province
+                                </div>
+                            </th>
+                            <th>
+                                <div class="flex justify-content-between align-items-center">
+                                    City
+                                </div>
+                            </th>
+                        </tr>
+                    </ng-template>
+
+
+                    <ng-template pTemplate="body" let-addr>
+                        <tr>
+                            <td style="min-width: 12rem;">
+                                {{addr.addressLine1}}
+                            </td>
+                            <td style="min-width: 12rem;">
+                                {{addr.addressLine2}}
+                            </td>
+                            <td style="min-width: 12rem;">
+                                {{addr.addressLine3}}
+                            </td>
+                            <td style="min-width: 12rem;">
+                                {{addr.addressLine4}}
+                            </td>
+                            <td style="min-width: 12rem;">
+                                {{addr.code}}
+                            </td>
+                            <td style="min-width: 12rem;">
+                                {{addr.examinationNumber}}
+                            </td>
+                            <td style="min-width: 12rem;">
+                                {{addr.province}}
+                            </td>
+                            <td style="min-width: 12rem;">
+                                {{addr.city}}
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+                </ng-template>
+                </p-overlayPanel>
+                </td>
+                </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="7">No data found.</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="loadingbody">
+                    <tr>
+                        <td colspan="7">Loading data. Please wait.</td>
+                    </tr>
+                </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </div>
+
+    <ng-template pTemplate="footer">
+        <span class="button-container">
+            <p-toast></p-toast>
+            <p-confirmPopup key="confirm2"></p-confirmPopup>
+            <p-button styleClass="p-button-lg p-button-success p-button-raised"
+                style="margin-left: 5px;margin-top: 10px;" label="SUBMIT INSTITUTION DETAILS" icon="pi pi-save"
+                [loading]="confirmLoading" (click)="confirmInstDetails($event)" class="p-button-success mr-2 mb-2"></p-button>
+        </span>
+    </ng-template>
+
+</p-panel>

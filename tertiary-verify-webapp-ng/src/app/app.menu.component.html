@@ -1,0 +1,48 @@
+
+<style>
+    .profile-image {
+      border-radius: 50%;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+    }
+
+    .sidebar-logout {
+      border-radius: 8px;
+      color: #e53935 !important;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+
+    .sidebar-logout:hover {
+      background: rgba(229, 57, 53, 0.1);
+    }
+  </style>
+<div class="layout-menu-container" (click)="onMenuClick($event)">
+    <div class="menu-scroll-content">
+        <div class="layout-profile" *ngIf="app.inlineUser && !appMain.isHorizontal()">
+                <a class="layout-profile-button" (click)="appMain.onProfileClick($event)">
+                    <img src="{{userDetails.imageUrl}}" alt="roma-layout" class="profile-image">
+                    <div class="layout-profile-userinfo">
+                        <span class="layout-profile-name">{{userDetails.name}} {{userDetails.surname}} <i style="font-size: 1rem" class="pi pi-fw pi-user-edit"></i></span>
+                    </div>
+                </a>
+                <ul [@inline]="!appMain.isSlim() ? appMain.inlineUserMenuActive ? 'visibleAnimated' : 'hiddenAnimated' : appMain.inlineUserMenuActive ? 'visible' : 'hidden'" class="layout-profile-menu">
+                    <li>
+                        <a href="#/pages/profile" pRipple>
+                            <i class="pi pi-fw pi-user"></i><span>Profile</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" pRipple (click)="$event.preventDefault(); logout()" class="sidebar-logout">
+                            <i class="pi pi-fw pi-sign-out"></i><span>Logout</span>
+                        </a>
+                    </li>
+                </ul>
+        </div>
+        <ul class="layout-menu">
+            <li app-menuitem *ngFor="let item of model; let i = index;" [item]="item" [index]="i" [root]="true"></li>
+        </ul>
+    </div>
+</div>

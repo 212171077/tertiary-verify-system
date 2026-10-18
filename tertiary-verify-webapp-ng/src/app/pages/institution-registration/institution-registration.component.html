@@ -1,0 +1,294 @@
+<div class="grid">
+    <p-toast key="tst" [baseZIndex]="99999"></p-toast>
+    <div class="col-12">
+        <div class="card">
+            <h4>Add Institutions</h4>
+            <p-dialog header="Add Institution" [(visible)]="display" modal="modal" showEffect="fade"
+                [style]="{width: '50vw'}" [breakpoints]="{'960px': '75vw'}">
+                <p class="line-height-3 m-0">
+                    <p-panel header="" [toggleable]="false">
+                        <ng-template pTemplate="header">
+                            <div class="flex align-items-center text-primary">
+                                <span class="pi pi-building mr-2"></span>
+                                <span class="font-bold text-lg">Enter Institution Details</span>
+                            </div>
+                        </ng-template>
+
+                        <div class="p-fluid">
+                            <div class="p-formgrid grid">
+                                <div class="field col">
+                                    <label for="institutionType">Type of institution</label>
+                                    <p-dropdown id="institutionType" [options]="institutionTypeList"
+                                        placeholder="Select the type of institution" optionLabel="description"
+                                        [filter]="true" filterBy="description" [showClear]="true"
+                                        [(ngModel)]="updateInstDetails.institutionType" optionValue="description"
+                                        required="true" [formControl]="institutionTypeControl"></p-dropdown>
+
+                                    <div *ngIf="institutionTypeControl.invalid && institutionTypeControl.touched"
+                                        class="text-danger">
+                                        <small *ngIf="institutionTypeControl.errors?.required" class="error-message">
+                                            Please select the type of institution.
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="field col">
+                                    <label htmlFor="email2">Institution name</label>
+                                    <input [(ngModel)]="updateInstDetails.institutionName"
+                                        [formControl]="institutionNameControl" pInputText id="institutionName"
+                                        type="text" />
+
+                                    <div *ngIf="institutionNameControl.invalid && institutionNameControl.touched"
+                                        class="text-danger">
+                                        <small *ngIf="institutionNameControl.errors?.required" class="error-message">
+                                            Please enter institution name.
+                                        </small>
+                                        <small *ngIf="institutionNameControl.errors?.minlength" class="error-message">
+                                            Institution name must be at least 1 characters long.
+                                        </small>
+                                        <small *ngIf="institutionNameControl.errors?.pattern" class="error-message">
+                                            Please enter a valid institution name.
+                                        </small>
+                                        <small *ngIf="institutionNameControl.errors?.maxlength" class="error-message">
+                                            Institution name cannot exceed 100 characters.
+                                        </small>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="p-formgrid grid">
+                                <div class="field col">
+                                    <label htmlFor="email2">Accreditation number</label>
+                                    <input [(ngModel)]="updateInstDetails.accreditationNumber"
+                                        [formControl]="accreditationNumberControl" pInputText id="accreditationNumber"
+                                        type="text" />
+
+                                    <div *ngIf="accreditationNumberControl.invalid && accreditationNumberControl.touched"
+                                        class="text-danger">
+                                        <small *ngIf="accreditationNumberControl.errors?.required"
+                                            class="error-message">
+                                            Please enter accreditation number.
+                                        </small>
+                                    </div>
+                                </div>
+
+                                <div class="field col">
+                                    <label htmlFor="email2">Contact number</label>
+                                    <input [(ngModel)]="updateInstDetails.contactNumber"
+                                        [formControl]="contactNumberControl" pInputText id="contactNumber"
+                                        type="text" />
+
+                                    <div *ngIf="contactNumberControl.invalid && contactNumberControl.touched"
+                                        class="text-danger">
+                                        <small *ngIf="contactNumberControl.errors?.required" class="error-message">
+                                            Please enter contact number.
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-formgrid grid">
+
+                                <div class="field col">
+                                    <label htmlFor="email2">Alternative contact number</label>
+                                    <input [(ngModel)]="updateInstDetails.alternativeContactNumber"
+                                        [formControl]="alternativeContactNumberControl" pInputText
+                                        id="alternativeContactNumber" type="text" />
+
+                                    <div *ngIf="alternativeContactNumberControl.invalid && alternativeContactNumberControl.touched"
+                                        class="text-danger">
+                                        <small *ngIf="alternativeContactNumberControl.errors?.required"
+                                            class="error-message">
+                                            Please enter alternative contact number.
+                                        </small>
+                                        <small
+                                            *ngIf="alternativeContactNumberControl.errors?.pattern && !alternativeContactNumberControl.errors?.required"
+                                            class="error-message">
+                                            Please enter a valid South African alternative contact number
+                                        </small>
+                                    </div>
+                                </div>
+
+                                <div class="field col">
+                                    <label htmlFor="email2">Email address</label>
+                                    <input [(ngModel)]="updateInstDetails.email" [formControl]="emailControl" pInputText
+                                        id="email" type="email" />
+
+                                    <div *ngIf="emailControl.invalid && emailControl.touched" class="text-danger">
+                                        <small *ngIf="emailControl.errors?.required" class="error-message">
+                                            Please enter email address.
+                                        </small>
+
+                                        <small *ngIf="emailControl.invalid && !emailControl.errors?.required"
+                                            class="error-message">
+                                            Please enter a valid email address.
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </p-panel>
+                </p>
+                <ng-template pTemplate="footer">
+                    <span class="button-container" style="margin: 10px;">
+                        <p-toast></p-toast>
+                        <button pButton pRipple label="Save" [loading]="regLoading"  icon="pi pi-save" (click)="registerInstitution()"
+                            class="p-button-success mr-2 mb-2"
+                            [disabled]="institutionTypeControl.invalid || institutionNameControl.invalid || accreditationNumberControl.invalid || contactNumberControl.invalid || alternativeContactNumberControl.invalid  || emailControl.invalid"></button>
+                        <p-confirmPopup key="confirm2"></p-confirmPopup>
+
+                        <button pButton pRipple label="Close" icon="pi pi-times" (click)="closeDialog($event)"
+                            class="p-button-danger mr-2 mb-2"></button>
+                    </span>
+                </ng-template>
+            </p-dialog>
+            <div class="grid">
+                <div class="col-12">
+                    <button (click)="display=true" pButton icon="pi pi-plus" label="ADD INSTITUTION"
+                        style="width:auto;"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <h4>List of Institutions</h4>
+            <p-table #dt1 [value]="dataList" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true"
+                styleClass="p-datatable-gridlines" [paginator]="true"
+                [globalFilterFields]="['institutionName','accreditationNumber']" responsiveLayout="scroll">
+                <ng-template pTemplate="caption">
+                    <div class="flex justify-content-between flex-column sm:flex-row">
+                        <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
+                            (click)="clear(dt1)"></button>
+                        <span class="p-input-icon-left mb-2">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" #filter
+                                (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Search Keyword"
+                                class="w-full" />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                Image
+                            </div>
+                        </th>
+
+                        <th pSortableColumn="institutionName">Name of institution<p-sortIcon field="institutionName">
+                            </p-sortIcon>
+                            <p-columnFilter type="text" field="institutionName" display="menu"
+                                placeholder="Search by institution name"></p-columnFilter>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                Accreditation number
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                Institution Type
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                Contact Number
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                Alternative contact number
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                Email address
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                Accreditation start date
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                Accreditation end date
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                Status
+                            </div>
+                        </th>
+
+                        <th style="width: 8rem">
+                            <div class="flex justify-content-between align-items-center">
+
+                            </div>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-data>
+                    <tr>
+                        <td style="min-width: 5rem;">
+                            <p-avatar image="{{data.image}}" size="large"
+                                ></p-avatar>
+                        </td>
+
+                        <td style="min-width: 12rem;">
+                            {{data.institutionName}}
+                        </td>
+                        <td style="min-width: 10rem;">
+                            {{data.accreditationNumber}}
+                        </td>
+                        <td style="min-width: 10rem;">
+                            {{data.type}}
+                        </td>
+                        <td style="min-width: 10rem;">
+                            {{data.contactNumber}}
+                        </td>
+                        <td style="min-width: 10rem;">
+                            {{data.alternativeContactNumber}}
+                        </td>
+                        <td style="min-width: 10rem;">
+                            {{data.email}}
+                        </td>
+                        <td style="min-width: 10rem;">
+                            {{data.accreditationStartDate}}
+                        </td>
+                        <td style="min-width: 10rem;">
+                            {{data.accreditationEndDate}}
+                        </td>
+                        <td style="min-width: 14rem;">
+                            <span class="p-column-title">Status</span>
+                            <span
+                                [class]="'inst-status-badge status-' + data.status.toLowerCase()">{{data.status}}</span>
+                        </td>
+
+                        <td class="text-center" style="min-width: 10rem;">
+                            <p-toast></p-toast>
+                            <button type="button" pButton pRipple icon="pi pi-database" (click)="updateData(data)"
+                                style="margin-inline-end: 0.30rem;" class="p-button-success mr-2 mb-2"></button>
+                            <p-confirmPopup key="confirm2"></p-confirmPopup>
+
+                            <button type="button" pButton pRipple icon="pi pi-trash" (click)="deleteData($event, data)"
+                                style="margin-inline-start: 0.30rem;" class="p-button-danger mr-2 mb-2"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="7">No data found.</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="loadingbody">
+                    <tr>
+                        <td colspan="7">Loading data. Please wait.</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>

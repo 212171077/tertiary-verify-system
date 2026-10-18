@@ -1,0 +1,127 @@
+$gutter: 1rem; //for primeflex grid system
+
+@import "../node_modules/primeng/resources/primeng.min.css";
+@import "../node_modules/primeflex/primeflex.scss";
+@import "../node_modules/primeicons/primeicons.css";
+@import "../node_modules/prismjs/themes/prism-coy.css";
+@import "assets/demo/flags/flags.css";
+@import "assets/demo/documentation.scss";
+
+.error-message {
+  color: red;
+}
+
+.button-container {
+  display: flex;
+  align-items: flex-end;
+}
+
+.button-container button {
+  margin-right: 10px;
+}
+
+.reason-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.reason-item {
+  background-color: #fad9d9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 4px rgba(230, 3, 3, 0.1);
+}
+
+.reason-item h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.reason-item p {
+  font-size: 1rem;
+}
+
+.no-reasons {
+  font-size: 1.2rem;
+  color: #999;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.read-out-input {
+  color: black;
+  background: cornsilk;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: minmax(150px, 1fr) 1fr;
+  grid-gap: 10px;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 600px) {
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.course-card {
+  border: 1px solid #e0e0e0;
+  padding: 10px;
+  border-radius: 4px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  text-align: left;
+  margin: 0 auto;
+}
+
+.course-title {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.course-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.course-type,
+.course-level {
+  background-color: #f0f0f0;
+  padding: 1px 2px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: lighter;
+}
+
+.label {
+  color: #414040;
+  font-size: 1rem;
+  margin-right: 5px;
+}
+
+/*File upload button*/
+.upload-container {
+  position: relative;
+}
+
+#fileInput {
+  display: none;
+}
+
+.upload-button {
+  background-color: #689F38;
+  color: white;
+  padding: 8px 13px;
+  cursor: pointer;
+  display: inline-block;
+  border-radius: 5px;
+}
+
+.upload-button:hover {
+  background-color: #306402;
+}

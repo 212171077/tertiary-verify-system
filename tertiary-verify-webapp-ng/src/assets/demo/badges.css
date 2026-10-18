@@ -1,0 +1,137 @@
+.inst-status-badge {
+  border-radius: var(--border-radius);
+  padding: 0.25em 0.5rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.3px;
+}
+.inst-status-badge.status-prov-approved {
+  background: #C8E6C9;
+  color: #256029;
+}
+.inst-status-badge.status-approved {
+  background: #C8E6C9;
+  color: #256029;
+}
+.inst-status-badge.status-sent {
+  background: #C8E6C9;
+  color: #256029;
+}
+.inst-status-badge.status-failed {
+  background: #FFCDD2;
+  color: #C63737;
+}
+.inst-status-badge.status-rejected {
+  background: #FFCDD2;
+  color: #C63737;
+}
+.inst-status-badge.status-pending {
+  background: #FEEDAF;
+  color: #7D6608;
+}
+.inst-status-badge.status-active {
+  background: #D5F5E3;
+  color: #2ECC71;
+}
+.inst-status-badge.status-in-active {
+  background: #FADBD8;
+  color: #B03A2E;
+}
+.inst-status-badge.status-expired {
+  background: #E59866;
+  color: #D35400;
+}
+.inst-status-badge.status-end-date-expired {
+  background: #E8DAEF;
+  color: #5B2C6F;
+}
+.inst-status-badge.status-updating {
+  background: #dfedf5;
+  color: #0b94f0;
+}
+.inst-status-badge.status-registering {
+  background: #D4E6F1;
+  color: #21618C;
+}
+
+.product-badge {
+  border-radius: var(--border-radius);
+  padding: 0.25em 0.5rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.3px;
+}
+.product-badge.status-instock {
+  background: #C8E6C9;
+  color: #256029;
+}
+.product-badge.status-outofstock {
+  background: #FFCDD2;
+  color: #C63737;
+}
+.product-badge.status-lowstock {
+  background: #FEEDAF;
+  color: #8A5340;
+}
+
+.customer-badge {
+  border-radius: var(--border-radius);
+  padding: 0.25em 0.5rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.3px;
+}
+.customer-badge.status-qualified {
+  background: #C8E6C9;
+  color: #256029;
+}
+.customer-badge.status-unqualified {
+  background: #FFCDD2;
+  color: #C63737;
+}
+.customer-badge.status-negotiation {
+  background: #FEEDAF;
+  color: #8A5340;
+}
+.customer-badge.status-new {
+  background: #B3E5FC;
+  color: #23547B;
+}
+.customer-badge.status-renewal {
+  background: #ECCFFF;
+  color: #694382;
+}
+.customer-badge.status-proposal {
+  background: #FFD8B2;
+  color: #805B36;
+}
+
+.order-badge {
+  border-radius: var(--border-radius);
+  padding: 0.25em 0.5rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.3px;
+}
+.order-badge.order-delivered {
+  background: #C8E6C9;
+  color: #256029;
+}
+.order-badge.order-cancelled {
+  background: #FFCDD2;
+  color: #C63737;
+}
+.order-badge.order-pending {
+  background: #FEEDAF;
+  color: #8A5340;
+}
+.order-badge.order-returned {
+  background: #ECCFFF;
+  color: #694382;
+}
+
+/*# sourceMappingURL=badges.css.map */

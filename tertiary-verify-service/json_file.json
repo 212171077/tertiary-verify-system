@@ -1,0 +1,17 @@
+{
+  "headers": {
+    "normalizedNames": {},
+    "lazyUpdate": null
+  },
+  "status": 400,
+  "statusText": "OK",
+  "url": "http://localhost:8081/api/tertiary_verify/confirm_institution_details",
+  "ok": false,
+  "name": "HttpErrorResponse",
+  "message": "Http failure response for http://localhost:8081/api/tertiary_verify/confirm_institution_details: 400 OK",
+  "error": {
+    "success": false,
+    "message": "Incomplete submission: An institution must have at least one address and one offered course. ",
+    "data": null
+  }
+}

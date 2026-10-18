@@ -1,0 +1,110 @@
+<style>
+    .progress-bar-container {
+        position: relative;
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background-color: #357b38;
+        align-items: center;
+    }
+
+
+
+    .counter {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 24px;
+        font-weight: bold;
+        color: white;
+    }
+
+    .progress-bar {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background-color: #E2841A;
+        animation: rotate 2s linear infinite, flash 0.5s ease-in-out infinite;
+        transform-origin: center;
+    }
+
+    @keyframes rotate {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes flash {
+
+        0%,
+        10%,
+        20%,
+        30%,
+        40%,
+        50%,
+        60%,
+        70%,
+        80%,
+        90%,
+        100% {
+            background-color: #E2841A;
+        }
+
+        5%,
+        15%,
+        25%,
+        35%,
+        45%,
+        55%,
+        65%,
+        75%,
+        85%,
+        95% {
+            background-color: #1e4620;
+        }
+    }
+</style>
+
+
+<router-outlet></router-outlet>
+<p-dialog header="Your session has expired" [(visible)]="showPopup" modal="modal" showEffect="fade"
+    [style]="{width: '30vw'}" [closable]="false" [breakpoints]="{'960px': '75vw'}">
+
+    <div class="grid">
+
+        <div class="col-12 lg:col-3">
+            <div class="progress-bar-container">
+                <div class="progress-bar" [style.animationDuration]="getAnimationDuration()"></div>
+                <div class="counter">{{ counter }}</div>
+            </div>
+        </div>
+
+        <div class="col-12 lg:col-9">
+            <p class="line-height-3 m-0">
+                Oops! It seems your session has expired. Please click
+                "Continue" if you still wish to use the app. By clicking "Continue,"
+                you will be able to resume your activities without any interruptions.
+            </p>
+        </div>
+    </div>
+   
+    <ng-template pTemplate="footer">
+        <div class="grid">
+            <div class="col-7 lg:col-7">
+                <button pButton icon="pi pi-check" type="button" (click)="sessionExpiredContinue()" label="CONTINUE"
+                    class="p-button-rounded p-button-success mr-2 mb-2"></button>
+            </div>
+
+            <div class="col-5 lg:col-5">
+                <button pButton icon="pi pi-times" type="button" (click)="sessionExpiredExit()" label="EXIT"
+                    class="p-button-rounded p-button-danger mr-2 mb-2"></button>
+            </div>
+        </div>
+    </ng-template>
+</p-dialog>

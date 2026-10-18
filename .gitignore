@@ -1,0 +1,17 @@
+node_modules/
+logs/
+.idea/
+target/
+dist/
+build/
+.dart_tool/
+*.bak
+*.p12
+*.jks
+*.pem
+.angular/
+local.properties
+keystore/
+tertiary-verify-service/src/main/resources/database/*.sql
+tertiary-verify-service/src/main/resources/application.properties
+tertiary-verify-service/src/main/resources/notes/

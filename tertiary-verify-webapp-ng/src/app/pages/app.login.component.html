@@ -1,0 +1,660 @@
+<style>
+    .login-panel-content {
+        border: 2px solid #ccc;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .username-container,
+    .password-container {
+        padding: 10px;
+        margin-bottom: 0px;
+    }
+
+    .navbar-panel {
+        border: 1px solid #ccc;
+        padding: 0px;
+        border-radius: 0px;
+    }
+
+    .navbar {
+        background-color: rgb(51, 126, 89);
+        color: #fff;
+        width: 100%;
+        display: flex;
+        align-items: center;
+    }
+
+    .navbar-heading {
+        font-size: 24px;
+        margin: 0;
+        padding: 0;
+    }
+
+    .navbar-heading {
+        margin-left: 10px;
+    }
+
+    .navbar-logo {
+        width: auto;
+        height: 70px;
+
+    }
+
+    .login-input input {
+        border: 1px solid #ddd;
+        outline: none;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 8px;
+        border-radius: 5px;
+        background-color: #ffffff;
+        color: #333;
+        font-size: 16px;
+    }
+
+    .button-link {
+        display: inline-block;
+        padding: 10px 20px;
+        border: 2px solid #ddd;
+        border-radius: 4px;
+        text-decoration: none;
+        color: #000;
+        transition: background-color 0.3s ease;
+        width: 100%;
+        text-align: center;
+    }
+
+    .button-link:hover {
+        background-color: #E2841A;
+        color: #fff;
+    }
+
+    .login-button {
+        display: inline-block;
+        padding: 10px 20px;
+        border: 2px solid #ddd;
+        border-radius: 5px;
+        text-decoration: none;
+        color: #fff;
+        transition: background-color 0.3s ease;
+        width: 100%;
+        text-align: center;
+        background-color: rgb(51, 126, 89);
+    }
+
+    .login-button:hover {
+        background-color: #E2841A;
+        color: #fff;
+        border: 2px solid #ddd;
+    }
+
+    .login-title {
+        display: block;
+        font-size: 24px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .login-panel-content {
+        max-height: 450px;
+        overflow-y: auto;
+    }
+
+    .error-message {
+        display: flex;
+        align-items: center;
+        background-color: #f8d7da;
+        color: #721c24;
+        padding: 10px;
+        border-radius: 4px;
+        margin-top: 5px;
+    }
+
+    .error-message i {
+        font-size: 20px;
+        margin-right: 10px;
+        color: #721c24;
+    }
+
+    .error-message span {
+        font-weight: bold;
+    }
+
+    .success-message {
+        display: flex;
+        align-items: center;
+        background-color: #d4edda;
+        color: #155724;
+        padding: 10px;
+        border-radius: 4px;
+        margin-top: 5px;
+    }
+
+    .success-message i {
+        font-size: 20px;
+        margin-right: 10px;
+        color: #155724;
+    }
+
+    .success-message span {
+        font-weight: bold;
+    }
+
+    .message {
+        background-color: #f2f2f2;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        color: #E2841A;
+        font-family: Arial, sans-serif;
+        font-size: 12px;
+        margin-top: 5px;
+        text-align: center;
+    }
+
+    .error-container {
+        background-color: #f8d7da;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    .error-item {
+        margin-bottom: 5px;
+    }
+
+    .error-key {
+        font-weight: bold;
+    }
+
+    .error-value {
+        margin-left: 5px;
+        color: red;
+    }
+
+    .scrollable-div {
+        width: 100%;
+        height: 470px;
+        overflow: auto;
+    }
+
+    .footer {
+        padding: 10px 0;
+        height: 10%;
+        width: 556px;
+        position: absolute;
+        right: 0;
+        background-color: #ffffff;
+        -moz-border-radius: 2px;
+        -webkit-border-radius: 2px;
+        border-radius: 2px;
+        bottom: 0;
+        color: #000000;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: fixed;
+    }
+
+    .footer-70-p {
+        padding: 10px 0;
+        height: 10%;
+        width: 70%;
+        position: absolute;
+        right: 0;
+        background-color: #ffffff;
+        -moz-border-radius: 2px;
+        -webkit-border-radius: 2px;
+        border-radius: 2px;
+        bottom: 0;
+        color: #000000;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: fixed;
+    }
+
+
+
+    .footer-left {
+        float: left;
+        margin-left: 20px;
+        width: 100%;
+        height: 70px;
+    }
+
+    .footer-right {
+        float: right;
+        margin-right: 20px;
+        margin-left: 20px;
+    }
+
+    .footer-left img {
+        vertical-align: middle;
+        max-height: 100%;
+    }
+
+    .footer-right p {
+        margin: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* Style the login menu */
+    #login-menu {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        /* Move the menu to the right */
+    }
+
+    #login-menu li {
+        margin-left: 20px;
+        /* Add some spacing between menu items */
+    }
+
+    #login-menu a {
+        text-decoration: none;
+        color: #ffffff;
+        /* Change the text color */
+        font-weight: bold;
+        padding: 5px 10px;
+        /* Add some padding to each menu item */
+        border-radius: 5px;
+        /* Add rounded corners */
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    #login-menu a {
+        text-decoration: none;
+        color: #ffffff;
+        font-weight: bold;
+        transition: color 0.3s ease;
+    }
+
+    #login-menu a:hover {
+        color: #ffcc00;
+    }
+
+    /* Move the login menu to the end */
+    .navbar-panel #login-menu {
+        margin-left: auto;
+    }
+
+    .contact-info {
+            background-color: #f4f4f4;
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        .staff-member {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .icon {
+            margin-right: 10px;
+        }
+      
+</style>
+
+
+<head>
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+</head>
+
+<div class="login-body">
+    <p-toast key="tst" [baseZIndex]="99999"></p-toast>
+    <div class="navbar navbar-panel navbar-panel col-12">
+        <img class="navbar-logo" src="/assets/layout/images/pages/logo.png" alt="Logo">
+        <h2 class="navbar-heading">TERTIARY VERIFY</h2>
+
+        <ul id="login-menu" style="margin-right: 70px;">
+            <li><a href="#/login?dispaly-form=login">LOGIN</a></li>
+            <li><a href="#/login?dispaly-form=support">SUPPORT</a></li>
+            <li><a href="#/login?dispaly-form=data-privacy">DATA PRIVACY</a></li>
+            <li><a href="#/login?dispaly-form=forgot-password">FORGOT PASSWORD</a></li>
+        </ul>
+    </div>
+
+
+    <!--Login form-->
+    <div *ngIf="displayForm == 'login'" class="card login-panel p-fluid">
+        <div *ngIf="errorMssg != null" class="error-message">
+            <i class="pi pi-exclamation-circle"></i>
+            <span>{{errorMssg}}</span>
+        </div>
+
+        <div *ngIf="successMssg != null" class="success-message">
+            <i class="pi pi-exclamation-circle"></i>
+            <span>{{successMssg}}</span>
+        </div>
+
+        <div *ngIf="errorResponse != null" class="error-container error-message">
+            <ul>margin-top: 20px
+                <li *ngFor="let error of errorResponse.errors | keyvalue" class="error-item">
+                    <span class="error-value">{{ error.value }}</span>
+                </li>
+            </ul>
+        </div>
+        <div class="login-panel-content" style="margin-top: 20px;">
+            <div class="grid">
+                <div class="col-12 sm:col-12 md:col-12 logo-container">
+                    <span class="login-title">LOGIN</span>
+                    <hr style="margin: 0px;" />
+                </div>
+                <div class="col-12 username-container">
+                    <label>Username</label>
+                    <div class="login-input">
+                        <input id="input" type="text" pInputText [(ngModel)]="username">
+                    </div>
+                </div>
+                <div class="col-12 password-container">
+                    <label>Password</label>
+                    <div class="login-input">
+                        <input pPassword type="password" [(ngModel)]="password" />
+                    </div>
+                </div>
+
+                <div class="col-12 sm:col-6 md:col-6" style="width: 100%;">
+                    <button class="login-button" pButton type="button" icon="pi pi-lock" [loading]="isLoading" label="SIGN IN"
+                        (click)="login()"></button>
+                </div>
+
+                <div class="col-12 sm:col-12 md:col-12 forgetpassword-container">
+                    <a href="#/login" (click)="switchForm('forgot-password')" class="button-link">Forgot Password</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!--Forgot password form-->
+    <div *ngIf="displayForm == 'forgot-password'" class="card login-panel p-fluid">
+        <div class="login-panel-content" style="margin-top: 20px;">
+            <div class="grid">
+                <div class="col-12 sm:col-12 md:col-12 logo-container">
+                    <span class="login-title">FORGOT PASSWORD</span>
+                    <hr style="margin: 0px;" />
+                </div>
+                <div class="col-12 username-container">
+                    <label>Email address</label>
+                    <div class="login-input">
+                        <input id="email" type="text" pInputText [(ngModel)]="email">
+                    </div>
+                </div>
+                <div class="col-12 password-container">
+                    <label>ID number</label>
+                    <div class="login-input">
+                        <input pPassword type="number" [(ngModel)]="idNumber" />
+                    </div>
+                </div>
+
+                <div class="col-12 sm:col-6 md:col-6" style="width: 100%;">
+                    <button class="login-button" pButton type="button" icon="pi pi-lock" label="SUBMIT"
+                        (click)="resetPassword()"></button>
+                </div>
+
+                <div class="col-12 sm:col-12 md:col-12 forgetpassword-container">
+                    <a href="#/login" (click)="switchForm('login')" class="button-link">Login Page</a>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+
+    <!--Change password form-->
+    <div *ngIf="displayForm == 'change-password'" class="card login-panel p-fluid">
+        <div class="login-panel-content" style="margin-top: 20px;">
+            <div class="grid">
+                <div class="col-12 sm:col-12 md:col-12 logo-container">
+                    <span class="login-title">CHANGE PASSWORD</span>
+                    <hr style="margin: 0px;" />
+                </div>
+                <div class="col-12 username-container">
+                    <label>New password</label>
+                    <div class="login-input">
+                        <input id="text" type="password" pInputText [(ngModel)]="newPassword">
+                    </div>
+                </div>
+                <div class="col-12 password-container">
+                    <label>Confirm password</label>
+                    <div class="login-input">
+                        <input pPassword type="password" [(ngModel)]="confirmPassword" />
+                    </div>
+                </div>
+
+                <div class="col-12 sm:col-6 md:col-6" style="width: 100%;">
+                    <button class="login-button" pButton type="button" icon="pi pi-lock" label="SUBMIT"
+                        (click)="changePassword()"></button>
+                </div>
+
+                <div class="col-12 sm:col-12 md:col-12 forgetpassword-container">
+                    <a href="#/login" (click)="switchForm('login')" class="button-link">Login Page</a>
+                </div>
+            </div>
+
+        </div>
+        <div *ngIf="displayForm == 'change-password'" class="message">
+            <p>Password must contain at least 8 characters, including one uppercase letter, one lowercase letter, one
+                digit, and one special character.</p>
+        </div>
+    </div>
+
+    <!--Support form-->
+    <div *ngIf="displayForm == 'support'" class="card login-panel p-fluid" style="width: 70%;">
+
+        <div class="p-fluid">
+            <div class="p-formgrid grid">
+                <div class="field col">
+                    <div class="scrollable-div">
+                        <div style="margin: 10px;">
+                            <div class="container">
+                                <h2>Contact Information</h2>
+                                <div class="contact-info">
+                                    <p><i class="pi pi-envelope icon"></i><strong>Email(General Info):</strong> info@tertiaryverify.co.za</p>
+                                    <p><i class="pi pi-envelope icon"></i><strong>Email(Support):</strong> support@tertiaryverify.co.za</p>
+                                    <!--<p><i class="pi pi-phone icon"></i> <strong>Phone:</strong> +27 (10) 335-8000</p>-->
+                                    <p><i class="pi pi-clock icon"></i> <strong>Availability:</strong> Monday to Friday, 9:00 AM - 5:00 PM (GMT)</p>
+                                </div>
+                        
+                                <!--<h2>Our Support Team</h2>
+                                <div class="contact-info">
+                                    <p><i class="pi pi-user icon"></i> <strong>Tebogo Mashita</strong> - Support Manager</p>
+                                    <p><i class="pi pi-envelope icon"></i> <strong>Email:</strong> tebogo@tertiaryverify.co.za</p>
+                                </div>
+                        
+                                <div class="contact-info">
+                                    <p><i class="pi pi-user icon"></i> <strong>Christoph Sibiya</strong> - Support Specialist</p>
+                                    <p><i class="pi pi-envelope icon"></i> <strong>Email:</strong> christoph.sibiya@tertiaryverify.co.za</p>
+                                </div>-->
+                            </div>
+                        </div>
+            
+                    </div>
+                </div>
+                <div class="field col">
+                    <p *ngIf="contactUsSuccessMssg != null" class="success-message">{{contactUsSuccessMssg}}</p>
+                    <p *ngIf="contactUsErrorMssg != null" class="error-message">{{contactUsErrorMssg}}</p>
+                    <div class="login-panel-content" style="margin-top: 20px;">
+                        <div class="grid">
+                            <div class="col-12 sm:col-12 md:col-12 logo-container">
+                                <span class="login-title">CONTACT US</span>
+                                <hr style="margin: 0px;" />
+                            </div>
+                            <div class="col-12 username-container">
+                                <div class="login-input">
+                                    <input type="text" pInputText [formControl]="fullNameControl" [(ngModel)]="contactUsRequest.fullName" placeholder="Full name">
+                                    <div *ngIf="fullNameControl.invalid && fullNameControl.touched" class="text-danger">
+                                        <small *ngIf="fullNameControl.errors?.required" class="error-message">
+                                            Please enter your full name.
+                                        </small>
+                                        <small *ngIf="fullNameControl.errors?.minlength" class="error-message">
+                                            Full name must be at least 1 characters long.
+                                        </small>
+                                        <small *ngIf="fullNameControl.errors?.pattern" class="error-message">
+                                            Please enter a valid full name.
+                                        </small>
+                                        <small *ngIf="fullNameControl.errors?.maxlength" class="error-message">
+                                            Full name cannot exceed 100 characters.
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 username-container">
+                                <div class="login-input">
+                                    <input type="email" [formControl]="emailControl" pInputText [(ngModel)]="contactUsRequest.email" placeholder="Email">
+                                    <div *ngIf="emailControl.invalid && emailControl.touched" class="text-danger">
+                                        <small *ngIf="emailControl.errors?.required" class="error-message">
+                                            Please enter your email address.
+                                        </small>
+                                        <small *ngIf="emailControl.invalid && !emailControl.errors?.required"
+                                            class="error-message">
+                                            Please enter a valid email address.
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                           
+
+                            <div class="col-12 username-container">
+                                <div class="login-input">
+                                    <input type="text" [formControl]="cellNumberControl" pInputText [(ngModel)]="contactUsRequest.cellNumber" placeholder="Phone number">
+                                    <div *ngIf="cellNumberControl.invalid && cellNumberControl.touched" class="text-danger">
+                                        <small *ngIf="cellNumberControl.errors?.required" class="error-message">
+                                            Please enter your cell number.
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 username-container">
+                                <div class="login-input">
+                                    <textarea [formControl]="messageControl" inputId="textarea" rows="3" cols="30" [(ngModel)]="contactUsRequest.message" pInputTextarea placeholder="Enter your message"></textarea>
+                                    <div *ngIf="messageControl.invalid && messageControl.touched" class="text-danger">
+                                        <small *ngIf="messageControl.errors?.required" class="error-message">
+                                            Please enter your message.
+                                        </small>
+                                        <small *ngIf="messageControl.errors?.maxlength" class="error-message">
+                                            Message cannot exceed 500 characters.
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 sm:col-6 md:col-6" style="width: 100%;">
+                                <button  [disabled]="fullNameControl.invalid || emailControl.invalid || cellNumberControl.invalid || messageControl.invalid"
+                                class="login-button" pButton type="button" icon="pi pi-envelope" label="SUBMIT"
+                                    (click)="sendContactUsMessage()"></button>
+                            </div>
+                        </div>
+
+                    </div>
+                   
+                        
+                </div>
+
+               
+            
+            </div>
+        </div>
+    </div>
+
+    <!--Data privacy form-->
+    <div *ngIf="displayForm == 'data-privacy'" class="card login-panel p-fluid" style="width: 70%;">
+        <div class="scrollable-div">
+            <div style="margin: 10px;">
+                <h4>Data Privacy</h4>
+                <p>Date: 24 August 2023</p>
+
+                <h5>Introduction</h5>
+
+                <p><b>Mashita Technologies (Pty) Ltd</b> treats the app/website users' confidential information with the
+                    utmost discretion. The Protection of Personal Information Act 4 of 2013 (POPIA), which
+                    operationalizes
+                    the constitutional right to privacy, further strengthens our resolve to protect our app/website
+                    users’
+                    information. POPIA promotes the fair and transparent use of personal information and requires us to
+                    safeguard it appropriately. Personal information as defined by POPIA is any information that can be
+                    used
+                    to identify you as an individual.</p>
+
+                <h5>1. Why we collect your information?</h5>
+                <ul>
+                    <li><b>Mashita Technologies (Pty) Ltd</b> collects your information so that the investigators may
+                        reach
+                        you for more information should the information logged not be enough.</li>
+                    <li><b>Mashita Technologies (Pty) Ltd</b> collects your information in order to send you a unique
+                        reference number for your report.</li>
+                    <li><b>Mashita Technologies (Pty) Ltd</b> collects your information to send you feedback on the
+                        report
+                        you previously logged.</li>
+                    <li><b>Mashita Technologies (Pty) Ltd</b> collects your information so that when you send
+                        information on
+                        contact us, we know who is sending and if feedback needs to be sent back we are able to do so.
+                    </li>
+                </ul>
+
+                <h5>2. How do we protect your information?</h5>
+
+                <p><b>Mashita Technologies (Pty) Ltd</b> is committed to ensuring that your information is secure. To
+                    prevent
+                    unauthorised access or disclosure, we have put reasonable physical, electronic and managerial
+                    procedures
+                    in place to safeguard and secure the information we collect.</p>
+
+                <h5>3. To whom will we disclose your information?</h5>
+
+                <p><b>Mashita Technologies (Pty) Ltd</b> may sometimes be required to disclose your information with
+                    third
+                    parties. These are the third parties possible but not limited to the following:</p>
+
+                <ul>
+                    <li>The government entity which uses the information that you have reported (i.e: Department of
+                        Higher
+                        Education and Training, Department of Basic Education, etc)</li>
+                    <li>South African Police Services, etc.</li>
+                </ul>
+
+                <h5>4. How long will we keep your information?</h5>
+
+                <p><b>Mashita Technologies (Pty) Ltd</b> will keep your information only for as long as we need it for a
+                    lawful business purpose.</p>
+
+            </div>
+
+        </div>
+    </div>
+
+    <footer *ngIf="displayForm == 'login' || displayForm == 'forgot-password' || displayForm =='change-password'" class="footer-70-p" class="footer">
+        <div class="footer-left">
+            <img src="assets/layout/images/pages/het.png" alt="roma-layout">
+        </div>
+        <div class="footer-right">
+            <p>Patent and Copyright 2023</p>
+            <p>Mashita Technologies (Pty) Ltd</p>
+        </div>
+    </footer>
+
+    <footer *ngIf="displayForm == 'data-privacy' || displayForm == 'support'" class="footer-70-p">
+        <div class="footer-left">
+            <img src="assets/layout/images/pages/het.png" alt="roma-layout">
+        </div>
+        <div class="footer-right">
+            <p>Patent and Copyright 2023</p>
+            <p>Mashita Technologies (Pty) Ltd</p>
+        </div>
+    </footer>
+
+
+
+</div>

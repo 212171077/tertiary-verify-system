@@ -1,0 +1,298 @@
+<div class="grid" id="mainForm">
+
+    <p-dialog header="Update User Roles" [(visible)]="display" modal="modal" showEffect="fade" [style]="{width: '70vw'}"
+        [breakpoints]="{'960px': '75vw'}">
+        <p class="line-height-3 m-0">
+            <p-panel header="" [toggleable]="false">
+                <ng-template pTemplate="header">
+                    <div class="flex align-items-center text-primary">
+                        <span class="pi pi-lock mr-2"></span>
+                        <span class="font-bold text-lg">User Roles</span>
+                    </div>
+                </ng-template>
+
+                <div class="p-fluid">
+                    <div class="p-formgrid grid">
+                        <div class="field col">
+
+                            <p-pickList [source]="sourceRoles" [target]="targetRoles" sourceHeader="Available roles"
+                                targetHeader="Selected roles" [dragdrop]="true" [responsive]="true"
+                                [sourceStyle]="{ height: '10rem' }" [targetStyle]="{ height: '10rem' }">
+                                <ng-template let-role pTemplate="item">
+                                    <div class="flex flex-wrap p-2 align-items-center gap-3">
+
+                                        <div class="flex-1 flex flex-column gap-2">
+                                            <span class="font-bold">{{ role.name }}</span>
+                                            <div class="flex align-products-center gap-2">
+                                                <span>{{ role.description }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </p-pickList>
+
+                        </div>
+                    </div>
+                </div>
+            </p-panel>
+        </p>
+        <ng-template pTemplate="footer">
+            <span class="button-container" style="margin: 10px;">
+                <p-toast></p-toast>
+                <button pButton pRipple label="Save" icon="pi pi-save" (click)="updateRoles()"
+                    class="p-button-success mr-2 mb-2"></button>
+
+                <p-confirmPopup key="confirm2"></p-confirmPopup>
+                <button pButton pRipple label="Close" icon="pi pi-times" (click)="display=false"
+                    class="p-button-danger mr-2 mb-2"></button>
+            </span>
+        </ng-template>
+    </p-dialog>
+
+
+    <p-toast key="tst" [baseZIndex]="99999"></p-toast>
+    <div class="col-12">
+        <div class="card">
+            <h4>User Management</h4>
+
+            <p-panel header="" [toggleable]="false">
+                <ng-template pTemplate="header">
+                    <div class="flex align-items-center text-primary">
+                        <span class="pi pi-user mr-2"></span>
+                        <span class="font-bold text-lg">Enter User Details</span>
+                    </div>
+                </ng-template>
+                <div class="p-fluid">
+                    <div class="p-formgrid grid col-12">
+
+
+
+                        <div class="field col-6">
+                            <label htmlFor="email2">First name</label>
+                            <input [(ngModel)]="userDetails.name" [formControl]="nameControl" pInputText type="text" />
+                            <div *ngIf="nameControl.invalid && nameControl.touched" class="text-danger">
+                                <small *ngIf="nameControl.errors?.required" class="error-message">
+                                    Please enter first name.
+                                </small>
+                                <small *ngIf="nameControl.errors?.minlength" class="error-message">
+                                    First name must be at least 1 characters long.
+                                </small>
+                                <small *ngIf="nameControl.errors?.pattern" class="error-message">
+                                    Please enter a valid first name.
+                                </small>
+                                <small *ngIf="nameControl.errors?.maxlength" class="error-message">
+                                    First name cannot exceed 50 characters.
+                                </small>
+                            </div>
+
+                        </div>
+
+                        <div class="field col-6">
+                            <label htmlFor="email2">Surname</label>
+                            <input [(ngModel)]="userDetails.surname" [formControl]="surnameControl" pInputText
+                                type="text" />
+                            <div *ngIf="surnameControl.invalid && surnameControl.touched" class="text-danger">
+                                <small *ngIf="surnameControl.errors?.required" class="error-message">
+                                    Please enter surname.
+                                </small>
+                                <small *ngIf="surnameControl.errors?.minlength" class="error-message">
+                                    Surname must be at least 1 characters long.
+                                </small>
+                                <small *ngIf="surnameControl.errors?.pattern" class="error-message">
+                                    Please enter a valid surname.
+                                </small>
+                                <small *ngIf="surnameControl.errors?.maxlength" class="error-message">
+                                    Surname cannot exceed 50 characters.
+                                </small>
+                            </div>
+
+                        </div>
+
+                        <div class="field col-6">
+                            <label for="title">Title</label>
+                            <p-dropdown id="title" [options]="titleList" placeholder="Select title" optionLabel="option"
+                                [filter]="true" filterBy="option" [showClear]="true" [(ngModel)]="userDetails.title"
+                                [formControl]="titleControl"></p-dropdown>
+
+                            <div *ngIf="titleControl.invalid && titleControl.touched" class="text-danger">
+                                <small *ngIf="titleControl.errors?.required" class="error-message">
+                                    Please select title.
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="field col-6">
+                            <label for="title">Gender</label>
+                            <p-dropdown id="gender" [options]="genderList" placeholder="Select title"
+                                optionLabel="option" [filter]="true" filterBy="option" [showClear]="true"
+                                [(ngModel)]="userDetails.gender" [formControl]="genderControl"></p-dropdown>
+
+                            <div *ngIf="genderControl.invalid && genderControl.touched" class="text-danger">
+                                <small *ngIf="genderControl.errors?.required" class="error-message">
+                                    Please select gender.
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="field col-6">
+                            <label htmlFor="email2">ID Number</label>
+                            <input [(ngModel)]="userDetails.idNumber" [formControl]="idNumberControl" pInputText
+                                type="text" />
+                            <div *ngIf="idNumberControl.invalid && (idNumberControl.dirty || idNumberControl.touched)">
+                                <small *ngIf="idNumberControl.hasError('required')" class="error-message">
+                                    Enter South African ID Number
+                                </small>
+                                <small *ngIf="idNumberControl.hasError('pattern')" class="error-message">
+                                    Invalid ID Number format, ID number must be 13 digit long
+                                </small>
+                                <small *ngIf="idNumberControl.hasError('southAfricanId')" class="error-message">
+                                    Enter valid South African ID Number
+                                </small>
+                            </div>
+                        </div>
+
+
+                        <div class="field col-6">
+                            <label htmlFor="email2">Cell Number</label>
+                            <input [(ngModel)]="userDetails.cellNumber" [formControl]="cellNumberControl" pInputText
+                                type="text" />
+                            <div *ngIf="cellNumberControl.invalid && cellNumberControl.touched" class="text-danger">
+                                <small *ngIf="cellNumberControl.errors?.required" class="error-message">
+                                    Please enter your cell number.
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="field col-6">
+                            <label for="email">Email</label>
+                            <input [(ngModel)]="userDetails.email" pInputText id="email" type="email"
+                                [formControl]="emailControl" />
+
+                            <div *ngIf="emailControl.invalid && emailControl.touched" class="text-danger">
+                                <small *ngIf="emailControl.errors?.required" class="error-message">
+                                    Please enter your email address.
+                                </small>
+
+                                <small *ngIf="emailControl.invalid && !emailControl.errors?.required"
+                                    class="error-message">
+                                    Please enter a valid email address.
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <ng-template pTemplate="footer">
+                    <span class="button-container">
+                        <p-toast></p-toast>
+                        <button style="margin-left: 15px;margin-top: 10px;" pButton pRipple label="Submit"
+                            icon="pi pi-save" (click)="saveUserData()" class="p-button-success mr-2 mb-2"
+                            [disabled]="titleControl.invalid || nameControl.invalid || surnameControl.invalid || idNumberControl.invalid || emailControl.invalid || cellNumberControl.invalid"></button>
+                        <p-confirmPopup key="confirm2"></p-confirmPopup>
+                        <button style="margin-left: 15px;margin-top: 10px;" pButton pRipple label="Clear"
+                            icon="pi pi-times" (click)="clearUserData()" class="p-button-primary mr-2 mb-2"></button>
+                    </span>
+                </ng-template>
+            </p-panel>
+
+
+        </div>
+    </div>
+</div>
+
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <h4>List of Users</h4>
+            <p-table #dt1 [value]="dataList" dataKey="id" [rows]="5" [loading]="loading" [rowHover]="true"
+                styleClass="p-datatable-gridlines" [paginator]="true" [globalFilterFields]="['idNum','name','surname']"
+                responsiveLayout="scroll">
+                <ng-template pTemplate="caption">
+                    <div class="flex justify-content-between flex-column sm:flex-row">
+                        <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
+                            (click)="clear(dt1)"></button>
+                        <span class="p-input-icon-left mb-2">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" #filter
+                                (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Search Keyword"
+                                class="w-full" />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="idNum">ID number <p-sortIcon field="idNum">
+                            </p-sortIcon>
+                            <p-columnFilter type="text" field="idNum" display="menu"
+                                placeholder="Search by ID number"></p-columnFilter>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                Name
+                                <p-columnFilter type="text" field="name" display="menu"
+                                    placeholder="Search by name"></p-columnFilter>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                Surname
+                                <p-columnFilter type="text" field="surname" display="menu"
+                                    placeholder="Search by surname"></p-columnFilter>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                Registered date
+                            </div>
+                        </th>
+                        <th style="width: 8rem">
+                            <div class="flex justify-content-between align-items-center">
+
+                            </div>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-data>
+                    <tr>
+                        <td style="min-width: 12rem;">
+                            {{data.rsaId}}
+                        </td>
+                        <td style="min-width: 12rem;">
+                            {{data.name}}
+                        </td>
+                        <td style="min-width: 12rem;">
+                            {{data.surname}}
+                        </td>
+                        <td style="min-width: 10rem;">
+                            {{data.createDate | date: 'MM/dd/yyyy'}}
+                        </td>
+
+                        <td class="text-center" style="min-width: 13rem;">
+                            <p-toast></p-toast>
+                            <button type="button" pButton pRipple icon="pi pi-database" (click)="updateData(data)"
+                                style="margin-inline-end: 0.30rem;" class="p-button-success mr-2 mb-2"></button>
+                            <p-confirmPopup key="confirm2"></p-confirmPopup>
+
+                            <button type="button" pButton pRipple icon="pi pi-search-plus"
+                                (click)="showRolesDialog(data)" style="margin-inline-end: 0.30rem;"
+                                class="p-button-info mr-2 mb-2"></button>
+
+                            <button type="button" pButton pRipple icon="pi pi-trash" (click)="deleteUser($event, data)"
+                                style="margin-inline-start: 0.30rem;" class="p-button-danger mr-2 mb-2"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="7">No data found.</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="loadingbody">
+                    <tr>
+                        <td colspan="7">Loading data. Please wait.</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>

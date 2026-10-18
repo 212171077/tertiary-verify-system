@@ -1,0 +1,364 @@
+<style>
+    .profile-header-img {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid #fff;
+        background: #f5f5f5;
+        box-shadow: 0 2px 8px rgba(25, 118, 210, 0.08);
+    }
+
+    .role-chip {
+        display: inline-block;
+        background: #e8f5e9;
+        color: #388e3c;
+        border-radius: 16px;
+        padding: 0.2em 1em;
+        margin: 0 0.5em 0.25em 0;
+        font-size: 0.95em;
+        font-weight: 500;
+        border: 1.5px solid #a5d6a7;
+    }
+
+    .profile-value {
+        margin-top: 5px;
+        padding: 0.75rem;
+        background: #f3f4f6;
+        border: 3px solid #fff;
+        border-radius: 0.5rem;
+    }
+
+    .profile-value label:first-child {
+        font-weight: lighter;
+    }
+
+    .profile-value label:last-child {
+        font-weight: bold;
+    }
+
+    .error-message {
+        color: #e74c3c;
+        display: block;
+        margin-top: 0.25rem;
+    }
+
+    .profile-image-wrapper {
+        position: relative;
+        display: inline-flex;
+    }
+
+    .profile-image-upload {
+        position: absolute;
+        right: -6px;
+        bottom: -6px;
+        width: 28px;
+        height: 28px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: #1976d2;
+        color: #fff;
+        cursor: pointer;
+        box-shadow: 0 2px 8px rgba(25, 118, 210, 0.15);
+    }
+
+    .profile-image-upload input {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        opacity: 0;
+        overflow: hidden;
+        pointer-events: none;
+    }
+
+    .profile-image-upload.disabled {
+        cursor: wait;
+        opacity: 0.6;
+    }
+
+    .profile-image-spinner {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        color: #1976d2;
+        background: rgba(255, 255, 255, 0.8);
+        font-size: 1.5rem;
+    }
+</style>
+
+<div class="grid" id="mainForm">
+    <p-toast key="tst" [baseZIndex]="99999"></p-toast>
+    <div class="col-12">
+        <div class="card">
+            <h4>My Profile</h4>
+
+            <p-panel [toggleable]="false">
+                <ng-template pTemplate="header">
+                    <div class="flex align-items-center justify-content-between text-primary"
+                        style="gap: 1rem; width: 100%;">
+                        <div class="flex align-items-center" style="gap: 1rem;">
+                            <div class="profile-image-wrapper">
+                                <img *ngIf="userDetails?.imageUrl; else profilePlaceholder"
+                                    [src]="userDetails.imageUrl" alt="Profile image" class="profile-header-img" />
+                                <ng-template #profilePlaceholder>
+                                    <span class="pi pi-user profile-header-img"
+                                        style="display: inline-flex; align-items: center; justify-content: center; font-size: 1.5rem; background: #e3f2fd; color: #1976d2;"></span>
+                                </ng-template>
+                                <label for="profileImageInput" class="profile-image-upload"
+                                    [class.disabled]="uploadingImage" pTooltip="Upload profile image"
+                                    aria-label="Upload profile image">
+                                    <span class="pi pi-camera" aria-hidden="true"></span>
+                                    <input id="profileImageInput" type="file" accept="image/jpeg,image/png,image/gif"
+                                        (change)="onProfileImageChange($event)" [disabled]="uploadingImage" />
+                                </label>
+                                <span *ngIf="uploadingImage"
+                                    class="pi pi-spin pi-spinner profile-image-spinner"></span>
+                            </div>
+                            <span class="font-bold text-lg">My personal details</span>
+                        </div>
+                        <button pButton pRipple type="button" class="p-button mr-2 mb-2"
+                            pTooltip="Edit profile details" (click)="openProfileDetails()">Update</button>
+                    </div>
+                </ng-template>
+
+                <div class="p-fluid">
+                    <div class="grid" style="margin: 10px;">
+                        <div class="col-12 md:col-6">
+                            <div class="profile-value">
+                                <label>Title: </label>
+                                <label>{{ updatedUser?.title?.option || 'Not provided' }}</label>
+                            </div>
+                        </div>
+                        <div class="col-12 md:col-6">
+                            <div class="profile-value">
+                                <label>Name: </label>
+                                <label>{{ updatedUser?.name || 'Not provided' }}</label>
+                            </div>
+                        </div>
+                        <div class="col-12 md:col-6">
+                            <div class="profile-value">
+                                <label>Surname: </label>
+                                <label>{{ updatedUser?.surname || 'Not provided' }}</label>
+                            </div>
+                        </div>
+                        <div class="col-12 md:col-6">
+                            <div class="profile-value">
+                                <label>ID Number: </label>
+                                <label>{{ userDetails?.rsaId || 'Not provided' }}</label>
+                            </div>
+                        </div>
+                        <div class="col-12 md:col-6">
+                            <div class="profile-value">
+                                <label>Date of birth: </label>
+                                <label>{{ userDetails?.dateOfBirth || 'Not provided' }}</label>
+                            </div>
+                        </div>
+                        <div class="col-12 md:col-6">
+                            <div class="profile-value">
+                                <label>Gender: </label>
+                                <label>{{ updatedUser?.gender?.option || 'Not provided' }}</label>
+                            </div>
+                        </div>
+                        <div class="col-12 md:col-6">
+                            <div class="profile-value">
+                                <label>Cell number: </label>
+                                <label>{{ updatedUser?.cellNumber || 'Not provided' }}</label>
+                            </div>
+                        </div>
+                        <div class="col-12 md:col-6">
+                            <div class="profile-value">
+                                <label>Email: </label>
+                                <label>{{ updatedUser?.email || 'Not provided' }}</label>
+                            </div>
+                        </div>
+                        <div class="col-12 md:col-6">
+                            <div class="profile-value">
+                                <label>Date created: </label>
+                                <label>{{ userDetails?.createDate | date: 'MM/dd/yyyy' }}</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="profile-value">
+                                <label>User roles: </label>
+                                <ng-container *ngIf="userDetails?.roles?.length; else noRoles">
+                                    <span class="role-chip" *ngFor="let role of userDetails.roles">
+                                        {{ role.description || role.name || role }}
+                                    </span>
+                                </ng-container>
+                                <ng-template #noRoles>
+                                    <span class="text-muted">No roles assigned</span>
+                                </ng-template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </p-panel>
+
+            <br />
+
+            <p-panel [toggleable]="false">
+                <ng-template pTemplate="header">
+                    <div class="flex align-items-center justify-content-between text-primary"
+                        style="gap: 1rem; width: 100%;">
+                        <div class="flex align-items-center" style="gap: 1rem;">
+                            <span class="pi pi-lock"
+                                style="font-size: 1.5rem; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: #e3f2fd; border: 3px solid #fff;"></span>
+                            <span class="font-bold text-lg">My login details</span>
+                        </div>
+                        <button pButton pRipple type="button" class="p-button mr-2 mb-2"
+                            pTooltip="Update password" (click)="openLoginDetails()">Update</button>
+                    </div>
+                </ng-template>
+                <div class="grid" style="margin: 10px;">
+                    <div class="col-12 md:col-6">
+                        <div class="profile-value">
+                            <label>Username: </label>
+                            <label>{{ loginDetails?.username || 'Not available' }}</label>
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-6">
+                        <div class="profile-value">
+                            <label>Password: </label>
+                            <label>****************</label>
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-6">
+                        <div class="profile-value">
+                            <label>Last login: </label>
+                            <label>{{ userDetails?.lastLoginDate ? (userDetails.lastLoginDate | date: 'MM/dd/yyyy HH:mm') : 'Never logged in' }}</label>
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-6">
+                        <div class="profile-value">
+                            <label>Status: </label>
+                            <span class="role-chip">{{ userDetails?.status || 'Not available' }}</span>
+                        </div>
+                    </div>
+                </div>
+            </p-panel>
+        </div>
+    </div>
+</div>
+
+<p-dialog header="Update personal details" [(visible)]="displayProfileDetails" [modal]="true"
+    [style]="{ width: 'min(600px, 95vw)' }" [draggable]="false" [resizable]="false">
+    <div class="p-fluid grid" *ngIf="profileDraft">
+        <div class="field col-12">
+            <label for="profileName">Name</label>
+            <input id="profileName" type="text" pInputText maxlength="50" [(ngModel)]="profileDraft.name"
+                [formControl]="nameControl" />
+            <small *ngIf="nameControl.invalid && nameControl.touched" class="error-message">
+                <ng-container *ngIf="nameControl.errors?.required">Please enter your name.</ng-container>
+                <ng-container *ngIf="nameControl.errors?.minlength">Name must be at least 2 characters long.</ng-container>
+                <ng-container *ngIf="nameControl.errors?.pattern">Please enter a valid name.</ng-container>
+                <ng-container *ngIf="nameControl.errors?.maxlength">Name cannot exceed 50 characters.</ng-container>
+            </small>
+        </div>
+
+        <div class="field col-12">
+            <label for="profileSurname">Surname</label>
+            <input id="profileSurname" type="text" pInputText maxlength="50" [(ngModel)]="profileDraft.surname"
+                [formControl]="surnameControl" />
+            <small *ngIf="surnameControl.invalid && surnameControl.touched" class="error-message">
+                <ng-container *ngIf="surnameControl.errors?.required">Please enter your surname.</ng-container>
+                <ng-container *ngIf="surnameControl.errors?.minlength">Surname must be at least 2 characters long.</ng-container>
+                <ng-container *ngIf="surnameControl.errors?.pattern">Please enter a valid surname.</ng-container>
+                <ng-container *ngIf="surnameControl.errors?.maxlength">Surname cannot exceed 50 characters.</ng-container>
+            </small>
+        </div>
+
+        <div class="field col-12">
+            <label for="profileEmail">Email</label>
+            <input id="profileEmail" type="email" pInputText [(ngModel)]="profileDraft.email"
+                [formControl]="emailControl" />
+            <small *ngIf="emailControl.invalid && emailControl.touched" class="error-message">
+                <ng-container *ngIf="emailControl.errors?.required">Please enter your email address.</ng-container>
+                <ng-container *ngIf="emailControl.errors?.email">Please enter a valid email address.</ng-container>
+            </small>
+        </div>
+
+        <div class="field col-12">
+            <label for="profileCellNumber">Cell number</label>
+            <input id="profileCellNumber" type="text" pInputText [(ngModel)]="profileDraft.cellNumber"
+                [formControl]="cellNumberControl" />
+            <small *ngIf="cellNumberControl.invalid && cellNumberControl.touched" class="error-message">
+                <ng-container *ngIf="cellNumberControl.errors?.required">Please enter your cell number.</ng-container>
+                <ng-container *ngIf="cellNumberControl.errors?.pattern">Enter a valid South African cell number.</ng-container>
+            </small>
+        </div>
+
+        <div class="field col-12 md:col-6">
+            <label for="profileGender">Gender</label>
+            <p-dropdown id="profileGender" [options]="userDetails.genders" [(ngModel)]="profileDraft.gender"
+                optionLabel="option" [formControl]="genderControl"></p-dropdown>
+            <small *ngIf="genderControl.invalid && genderControl.touched" class="error-message">
+                Please select your gender.
+            </small>
+        </div>
+
+        <div class="field col-12 md:col-6">
+            <label for="profileTitle">Title</label>
+            <p-dropdown id="profileTitle" [options]="userDetails.titles" [(ngModel)]="profileDraft.title"
+                optionLabel="option" [formControl]="titleControl"></p-dropdown>
+            <small *ngIf="titleControl.invalid && titleControl.touched" class="error-message">
+                Please select your title.
+            </small>
+        </div>
+    </div>
+
+    <ng-template pTemplate="footer">
+        <button pButton type="button" label="Cancel" class="p-button-text"
+            (click)="displayProfileDetails = false"></button>
+        <button pButton type="button" label="Save" [loading]="userDetailsLoading"
+            [disabled]="!isProfileFormValid()" (click)="updateUserDetails()"></button>
+    </ng-template>
+</p-dialog>
+
+<p-dialog header="Update password" [(visible)]="displayLoginDetails" [modal]="true"
+    [style]="{ width: 'min(500px, 95vw)' }" [draggable]="false" [resizable]="false">
+    <div class="p-fluid grid">
+        <div class="field col-12">
+            <label for="oldPassword">Current password</label>
+            <input id="oldPassword" type="password" pInputText autocomplete="current-password"
+                [formControl]="oldPasswordControl" />
+            <small *ngIf="oldPasswordControl.invalid && oldPasswordControl.touched" class="error-message">
+                Please enter your current password.
+            </small>
+        </div>
+        <div class="field col-12">
+            <label for="newPassword">New password</label>
+            <input id="newPassword" type="password" pInputText autocomplete="new-password"
+                [formControl]="newPasswordControl" />
+            <small *ngIf="newPasswordControl.invalid && newPasswordControl.touched" class="error-message">
+                <ng-container *ngIf="newPasswordControl.errors?.required">Please enter a new password.</ng-container>
+                <ng-container *ngIf="newPasswordControl.errors?.pattern">
+                    Use at least 8 characters with uppercase and lowercase letters, a number, and a special character.
+                </ng-container>
+            </small>
+        </div>
+        <div class="field col-12">
+            <label for="confirmPassword">Confirm new password</label>
+            <input id="confirmPassword" type="password" pInputText autocomplete="new-password"
+                [formControl]="confirmPasswordControl" />
+            <small *ngIf="confirmPasswordControl.invalid && confirmPasswordControl.touched" class="error-message">
+                Please confirm your new password.
+            </small>
+            <small *ngIf="confirmPasswordControl.touched && confirmPasswordControl.valid && !passwordsMatch"
+                class="error-message">
+                The passwords do not match.
+            </small>
+        </div>
+    </div>
+
+    <ng-template pTemplate="footer">
+        <button pButton type="button" label="Cancel" class="p-button-text"
+            (click)="displayLoginDetails = false"></button>
+        <button pButton type="button" label="Save password" [loading]="passwordLoading"
+            [disabled]="!isPasswordFormValid()" (click)="updatePassword()"></button>
+    </ng-template>
+</p-dialog>

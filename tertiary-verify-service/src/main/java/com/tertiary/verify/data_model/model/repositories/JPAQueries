@@ -1,0 +1,100 @@
+	
+
+	
+	@Query("select c from user c where c.email = ?1")
+    public Users getUserByEmail(String email);
+	
+
+	/*@Query("select c from Users c where c.email =:email", nativeQuery = true)
+    public Users getUserByEmail(@Param("email") String email);*/
+	
+	/*@Query(value = "SELECT * FROM USERS WHERE EMAIL_ADDRESS = ?1", nativeQuery = true)
+	Users findByEmailAddress(String emailAddress);
+	 
+	//------------------------------------------- equality
+	    
+    public Users findByName(String UserName);
+    
+    @Query("select c from Users c where c.name = ?1")
+    public Users findByNameQueryPositionalParam(String UserName);
+    
+    @Query("select c from Users c where c.name = :UserName")
+    public Users findByNameQueryNamedParam(@Param("UserName") String UserName);
+    
+    //------------------------------------------- ignore case
+
+    public Users findByNameIgnoreCase(String UserName);
+
+    @Query("select c from Users c where lower(c.name) = lower(:UserName)")
+    public Users findByNameIgnoreCaseQuery(@Param("UserName") String UserName);
+
+    //------------------------------------------- not equal
+    
+    public List<Users> findByNameNot(String UserName);
+
+    @Query("select c from Users c where c.name != :name")
+    public List<Users> findByNameNotQuery(@Param("name") String UserName);
+
+    //------------------------------------------- like / containing / startingWith
+
+    public List<Users> findByNameLike(String searchTerm);
+
+    public List<Users> getByNameContaining(String searchTerm);
+    
+    public List<Users> readByNameStartingWith(String searchTerm);
+
+    @Query("select c from Users c where c.name like ?1")
+    public List<Users> findByNameLikeQuery(String searchTerm);
+    
+    //------------------------------------------- nested
+    
+    public List<Users> findByContinentName(String continentName);
+    
+    @Query("select ctry from Users ctry where ctry.continent.name = :name")
+    public List<Users> findByContinentNameQuery(@Param("name") String continentName);
+    
+    //------------------------------------------- less than / greater than
+
+    public List<Users> findByAreaLessThan(int area);
+
+    @Query("select c from Users c where c.area < ?1")
+    public List<Users> findByAreaLessThanQuery(int area);
+
+    public List<Users> findByPopulationGreaterThan(int population);
+
+    @Query("select c from Users c where c.population > ?1")
+    public List<Users> findByPopulationGreaterThanQuery(int population);
+    
+    //------------------------------------------- between
+    
+    public List<Users> findByPopulationBetween(int start, int end);
+    
+    @Query("select c from Users c where c.population > ?1 and c.population < ?2")
+    public List<Users> findByPopulationBetweenQuery(int start, int end);
+    
+    //------------------------------------------- and
+
+    public List<Users> findByContinentNameAndPopulationLessThan(String continentName, int pop);
+
+    @Query("select c from Users c where c.continent.name = ?1 and c.population < ?2")
+    public List<Users> findByContinentNameAndPopulationLessThanQuery(String continentName, int pop);
+    
+    //------------------------------------------- or
+    
+    public List<Users> findByPopulationLessThanOrAreaLessThan(int pop, int area);
+    
+    @Query("select c from Users c where c.population < ?1 or c.area < ?2")
+    public List<Users> findByPopulationLessThanOrAreaLessThanQuery(int pop, int area);
+
+    //------------------------------------------- order by
+    
+    public List<Users> findByContinentNameOrderByPopulationDesc(String continentName);*/
+    
+    ---------------------------------------------- Count
+    https://www.logicbig.com/tutorials/spring-framework/spring-data/derived-count-query.html
+    public interface EmployeeRepository extends CrudRepository<Employee, Long> {
+	  long countByDept(String deptName);
+	  long countBySalaryGreaterThanEqual(int salary);
+	  long countByNameEndingWith(String endString);
+	  long countByNameLike(String likeString);
+	}

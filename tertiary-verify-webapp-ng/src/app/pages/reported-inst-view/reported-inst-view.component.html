@@ -1,0 +1,397 @@
+<p-toast key="tst" [baseZIndex]="99999"></p-toast>
+
+<p-dialog header="Reported Institution Details" [(visible)]="displayInstDetails" modal="modal" showEffect="fade"
+    [style]="{width: '50vw'}" [breakpoints]="{'960px': '75vw'}">
+    <div class="grid">
+        <div class="col-12">
+            <div class="card">
+                <div class="p-fluid">
+                    <div class="p-formgrid grid">
+                        <div class="field col">
+                            <label>Status</label>
+                            <input class="read-out-input" value="{{selectedInstitution?.status}}" pInputText
+                                disabled="true" type="text" />
+                        </div>
+                        <div class="field col">
+                            <label for="institutionType">Report Type</label>
+                            <input class="read-out-input" value="{{selectedInstitution?.reportType}}" pInputText
+                                disabled="true" type="text" />
+                        </div>
+                    </div>
+
+                    <div class="p-formgrid grid">
+                        <div class="field col">
+                            <label>Institution Name</label>
+                            <input class="read-out-input" value="{{selectedInstitution?.institutionName}}" pInputText
+                                disabled="true" type="text" />
+                        </div>
+                        <div class="field col">
+                            <label>Reference Number</label>
+                            <input class="read-out-input" value="{{selectedInstitution?.refNumber}}" pInputText
+                                disabled="true" type="text" />
+                        </div>
+                    </div>
+
+
+                    <div class="p-formgrid grid">
+                        <div class="field col">
+                            <label for="institutionType">Date Reported</label>
+                            <input class="read-out-input"
+                                value="{{selectedInstitution?.createDate | date: 'MM/dd/yyyy'}}" pInputText
+                                disabled="true" type="text" />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12" *ngIf="selectedInstitution?.reportedCourseList.length >0">
+            <h5>Bogus Courses</h5>
+            <div class="card">
+                <p-table [value]="selectedInstitution?.reportedCourseList" [tableStyle]="{ 'min-width': '50rem' }">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>Course Description</th>
+                            <th>Course Type</th>
+                            <th>Course Level</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-course>
+                        <tr>
+                            <td>{{ course?.description }}</td>
+                            <td>{{ course?.courseType }}</td>
+                            <td>{{ course?.courseLevel }}</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <h5>Address Details</h5>
+            <div class="card">
+                <div class="p-fluid">
+                    <div class="p-formgrid grid">
+                        <div class="field col">
+                            <label>Address Line 1</label>
+                            <input class="read-out-input" value="{{selectedInstitution?.addressLine1}}" pInputText
+                                disabled="true" type="text" />
+                        </div>
+                        <div class="field col">
+                            <label for="institutionType">Address Line 2</label>
+                            <input class="read-out-input" value="{{selectedInstitution?.addressLine2}}" pInputText
+                                disabled="true" type="text" />
+                        </div>
+                    </div>
+
+                    <div class="p-formgrid grid">
+                        <div class="field col">
+                            <label>Address Line 3</label>
+                            <input class="read-out-input" value="{{selectedInstitution?.addressLine3}}" pInputText
+                                disabled="true" type="text" />
+                        </div>
+                        <div class="field col">
+                            <label for="institutionType">Address Line 4</label>
+                            <input class="read-out-input" value="{{selectedInstitution?.addressLine4}}" pInputText
+                                disabled="true" type="text" />
+                        </div>
+                    </div>
+
+
+                    <div class="p-formgrid grid">
+                        <div class="field col">
+                            <label>Postal Code</label>
+                            <input class="read-out-input" value="{{selectedInstitution?.code}}" pInputText
+                                disabled="true" type="text" />
+                        </div>
+                        <div class="field col">
+                            <label for="institutionType">Province</label>
+                            <input class="read-out-input" value="{{selectedInstitution?.province | date: 'MM/dd/yyyy'}}"
+                                pInputText disabled="true" type="text" />
+                        </div>
+                    </div>
+
+                    <div class="p-formgrid grid">
+                        <div class="field col">
+                            <label>City</label>
+                            <input class="read-out-input" value="{{selectedInstitution?.city}}" pInputText
+                                disabled="true" type="text" />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12" *ngIf="selectedInstitution?.additionalInfo !=null">
+            <h5>Additional Details</h5>
+            <div class="card">
+                <p>{{selectedInstitution.additionalInfo}}</p>
+            </div>
+        </div>
+    </div>
+    <ng-template pTemplate="footer">
+        <button pButton icon="pi pi-check" (click)="displayInstDetails=false" label="Ok"
+            class="p-button-outlined"></button>
+    </ng-template>
+</p-dialog>
+
+<p-dialog header="Investigator Details" [(visible)]="displayInvestigatorDetails" modal="modal" showEffect="fade"
+    [style]="{width: '50vw'}" [breakpoints]="{'960px': '75vw'}">
+    <div class="grid">
+
+        <div class="col-12">
+            <div class="card">
+                <div class="p-fluid">
+                    <div class="p-formgrid grid">
+                        <div class="field col">
+                            <label>Name</label>
+                            <input class="read-out-input" value="{{selectedInstitution?.investigatorName}}" pInputText
+                                disabled="true" type="text" />
+                        </div>
+                        <div class="field col">
+                            <label>Surname</label>
+                            <input class="read-out-input" value="{{selectedInstitution?.investigatorSurname}}"
+                                pInputText disabled="true" type="text" />
+                        </div>
+                    </div>
+
+                    <div class="p-formgrid grid">
+                        <div class="field col">
+                            <label>Email</label>
+                            <input class="read-out-input" value="{{selectedInstitution?.investigatorEmail}}" pInputText
+                                disabled="true" type="text" />
+                        </div>
+                        <div class="field col">
+                            <label>Cell Number</label>
+                            <input class="read-out-input" value="{{selectedInstitution?.investigatorCell}}" pInputText
+                                disabled="true" type="text" />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <ng-template pTemplate="footer">
+        <button pButton icon="pi pi-check" (click)="displayInvestigatorDetails=false" label="Ok"
+            class="p-button-outlined"></button>
+    </ng-template>
+</p-dialog>
+
+<p-dialog header="Reporter's Details" [(visible)]="displayReporterDetails" modal="modal" showEffect="fade"
+    [style]="{width: '50vw'}" [breakpoints]="{'960px': '75vw'}">
+    <div class="grid">
+        <div class="col-12">
+            <div class="card">
+                <div class="p-fluid">
+                    <div class="p-formgrid grid">
+                        <div class="field col">
+                            <label>Name</label>
+                            <input class="read-out-input" value="{{selectedInstitution?.reporterName}}" pInputText
+                                disabled="true" type="text" />
+                        </div>
+                        <div class="field col">
+                            <label>Surname</label>
+                            <input class="read-out-input" value="{{selectedInstitution?.reporterSurname}}" pInputText
+                                disabled="true" type="text" />
+                        </div>
+                    </div>
+                    <div class="p-formgrid grid">
+                        <div class="field col">
+                            <label>Email</label>
+                            <input class="read-out-input" value="{{selectedInstitution?.reporterEmail}}" pInputText
+                                disabled="true" type="text" />
+                        </div>
+                        <div class="field col">
+                            <label>Cell Number</label>
+                            <input class="read-out-input" value="{{selectedInstitution?.reporterCell}}" pInputText
+                                disabled="true" type="text" />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ng-template pTemplate="footer">
+        <button pButton icon="pi pi-check" (click)="displayReporterDetails=false" label="Ok"
+            class="p-button-outlined"></button>
+    </ng-template>
+</p-dialog>
+
+<p-dialog header="Investigator Feedback" [(visible)]="displayFeedbackDetails" modal="modal" showEffect="fade"
+    [style]="{width: '50vw'}" [breakpoints]="{'960px': '75vw'}">
+    <div class="grid">
+
+        <div class="col-12">
+            <div class="card">
+                <div class="p-fluid">
+                    <div class="p-formgrid grid">
+                        <div class="field col">
+                            <label>Select status</label>
+                            <p-dropdown [options]="statusList" [(ngModel)]="selectedStatus" placeholder="Select a City"
+                                [showClear]="true"></p-dropdown>
+                        </div>
+                        <div class="field col">
+
+                        </div>
+                    </div>
+
+                    <div class="p-formgrid grid">
+                        <div class="field col">
+                            <label>Investigation Feedback</label>
+                            <textarea [(ngModel)]="feedbackDetails" rows="8" pInputTextarea
+                                placeholder="Enter your feedback"></textarea>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <ng-template pTemplate="footer">
+        <button pButton icon="pi pi-save" (click)="submitFeedback()" label="Submit" class="p-button-outlined"></button>
+
+        <button pButton icon="pi pi-times" (click)="displayFeedbackDetails=false" label="Close"
+            class="p-button-outlined"></button>
+    </ng-template>
+</p-dialog>
+
+<p-dialog header="Investigator Feedback History" [(visible)]="displayInvestigationHistory" modal="modal"
+    showEffect="fade" [style]="{width: '50vw'}" [closable]="false" [breakpoints]="{'960px': '75vw'}">
+
+    <div class="reason-list"
+        *ngIf="selectedInstitution?.investigationList && selectedInstitution?.investigationList.length > 0;">
+        <div *ngFor="let feedback of selectedInstitution?.investigationList" class="reason-item">
+            <p>{{ feedback.feedbackDetails}}</p>
+            <p-chip label="{{feedback.createDate}}" icon="pi pi-calendar" styleClass="m-1"></p-chip>
+        </div>
+    </div>
+
+    <div *ngIf="selectedInstitution?.investigationList ==null || selectedInstitution?.investigationList.length <= 0;">
+        <p class="no-reasons">No feedback available</p>
+    </div>
+
+    <ng-template pTemplate="footer">
+        <button pButton icon="pi pi-check" (click)="displayInvestigationHistory=false" label="Ok"
+            class="p-button-outlined"></button>
+    </ng-template>
+</p-dialog>
+
+
+
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <h4>{{configs.title}}</h4>
+            <p-table #dt1 [value]="dataList" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true"
+                styleClass="p-datatable-gridlines" [paginator]="true" [globalFilterFields]="['institutionName']"
+                responsiveLayout="scroll">
+                <ng-template pTemplate="caption">
+                    <div class="flex justify-content-between flex-column sm:flex-row">
+                        <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
+                            (click)="clear(dt1)"></button>
+                        <span class="p-input-icon-left mb-2">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" #filter
+                                (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Search Keyword"
+                                class="w-full" />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="institutionName">Institution Name<p-sortIcon field="institutionName">
+                            </p-sortIcon>
+                            <p-columnFilter type="text" field="institutionName" display="menu"
+                                placeholder="Search by institution name"></p-columnFilter>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                Report Type
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                Province
+                            </div>
+                        </th>
+
+                        <th style="width: 8rem">
+                            <div class="flex justify-content-between align-items-center">
+                                Date Reported
+                            </div>
+                        </th>
+
+                        <th style="width: 8rem">
+                            <div class="flex justify-content-between align-items-center">
+                                Status
+                            </div>
+                        </th>
+
+                        <th style="width: 8rem">
+                            <div class="flex justify-content-between align-items-center">
+
+                            </div>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-data>
+                    <tr>
+                        <td style="min-width: 12rem;">
+                            {{data.institutionName}}
+                        </td>
+                        <td style="min-width: 12rem;">
+                            {{data.reportType}}
+                        </td>
+                        <td style="min-width: 12rem;">
+                            {{data.province}}
+                        </td>
+                        <td style="min-width: 10rem;">
+                            {{data.createDate | date: 'MM/dd/yyyy'}}
+                        </td>
+                        <td style="min-width: 12rem;">
+                            {{data.status}}
+                        </td>
+
+                        <td class="text-center" style="min-width: 15rem;">
+
+                            <button *ngIf="configs.updateEnabled" pTooltip="Provide investigation feedback"
+                                type="button" pButton pRipple icon="pi pi-database" (click)="showFeedbackDialog(data)"
+                                style="margin-inline-end: 0.30rem;" class="p-button-success mr-2 mb-2"></button>
+
+                            <button pTooltip="View institution details" type="button" pButton pRipple icon="pi pi-eye"
+                                (click)="showInstDetailsDialog(data)" style="margin-inline-end: 0.30rem;"
+                                class="p-button-info mr-2 mb-2"></button>
+
+                            <button *ngIf="configs.viewInvestigator" pTooltip="View investigator" type="button" pButton
+                                pRipple icon="pi pi-user" (click)="showInvestigatorDialog(data)"
+                                style="margin-inline-start: 0.30rem;" class="p-button-info mr-2 mb-2"></button>
+
+                            <button *ngIf="configs.viewReporter" pTooltip="View reporter's details" type="button"
+                                pButton pRipple icon="pi pi-id-card" (click)="showIReporterDialog(data)"
+                                style="margin-inline-start: 0.30rem;" class="p-button-info mr-2 mb-2"></button>
+
+                            <button pTooltip="View investigation history" type="button" pButton pRipple
+                                icon="pi pi-verified" (click)="showInvestigationFeedback(data)"
+                                style="margin-inline-start: 0.30rem;" class="p-button-info mr-2 mb-2"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="7">No data found.</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="loadingbody">
+                    <tr>
+                        <td colspan="7">Loading data. Please wait.</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>
